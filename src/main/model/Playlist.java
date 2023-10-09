@@ -10,7 +10,7 @@ public class Playlist {
 
     //creates a playlist with a name, a list of songs,
     //and a variable that stores the number of songs.
-    Playlist(String name) {
+    public Playlist(String name) {
         this.name = name;
         this.songs = new ArrayList<Song>();
         this.numSongs = 0;
@@ -28,4 +28,9 @@ public class Playlist {
         return numSongs;
     }
 
+    //MODIFIES: this
+    //EFFECTS: adds a song to the playlist
+    public void addSong() {
+
+    }
 }

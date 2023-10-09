@@ -3,39 +3,14 @@ package model;
 public class Song {
     private String name;
     private String artist;
-    private String genre;
-    private int duration;
+    private String description;
+    //creates a song with a name and an artist and an empty description.
+    //the description for the song can be changed later on.
 
-    //creates a song with a name and an artist,
-    //and a genre or duration (in seconds) if known.
-    //note: genre will be stored as "unknown" if unspecified,
-    //and duration will be stored as -1 if unspecified.
-    Song(String name, String artist) {
+    public Song(String name, String artist) {
         this.name = name;
         this.artist = artist;
-        this.genre = "unknown";
-        this.duration = -1;
-    }
-
-    Song(String name, String artist, String genre) {
-        this.name = name;
-        this.artist = artist;
-        this.genre = genre;
-        this.duration = -1;
-    }
-
-    Song(String name, String artist, int duration) {
-        this.name = name;
-        this.artist = artist;
-        this.genre = "unknown";
-        this.duration = duration;
-    }
-
-    Song(String name, String artist, String genre, int duration) {
-        this.name = name;
-        this.artist = artist;
-        this.genre = genre;
-        this.duration = duration;
+        this.description = "";
     }
 
     public String getName() {
@@ -46,17 +21,20 @@ public class Song {
         return artist;
     }
 
-    public String getGenre() {
-        return genre;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
     public String getShortInfo() {
         return name + " by " + artist;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String desc) {
+        description = desc;
+    }
+
+    public String getLongInfo() {
+        return name + " by " + artist + "\n\nDetails:" + description;
+    }
 
 }
