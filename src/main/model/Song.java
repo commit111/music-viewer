@@ -34,7 +34,9 @@ public class Song {
     }
 
     public String getLongInfo() {
-        return name + " by " + artist + "\n\nDetails:" + description;
+        return name + " by " + artist + "\ndetails:" + description;
     }
+
+
 
 }

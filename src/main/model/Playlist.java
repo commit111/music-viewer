@@ -6,14 +6,11 @@ import java.util.ArrayList;
 public class Playlist {
     private String name;
     private ArrayList<Song> songs;
-    private int numSongs;
 
-    //creates a playlist with a name, a list of songs,
-    //and a variable that stores the number of songs.
+    //creates a playlist with a name and a list of songs
     public Playlist(String name) {
         this.name = name;
         this.songs = new ArrayList<Song>();
-        this.numSongs = 0;
     }
 
     public String getName() {
@@ -24,13 +21,35 @@ public class Playlist {
         return songs;
     }
 
-    public int getNumSongs() {
-        return numSongs;
+    //MODIFIES: this
+    //EFFECTS: adds a song to the playlist
+    public void addSong(Song song) {
+        this.songs.add(song);
     }
 
     //MODIFIES: this
-    //EFFECTS: adds a song to the playlist
-    public void addSong() {
+    //EFFECTS: removes a song from the playlist
+    public void removeSong(Song song) {
+        this.songs.remove(song);
+    }
 
+    //EFFECTS: returns true if song with a given name and artist exists in the playlist, false otherwise
+    public boolean doesSongExist(String name, String artist) {
+        for (Song s : this.getSongs()) {
+            if (s.getName().equals(name) && s.getArtist().equals(artist)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //EFFECTS: returns the first song with a given name if it is in the playlist, null otherwise
+    public Song getSongByNameAndArtist(String name, String artist) {
+        for (Song s : this.getSongs()) {
+            if (s.getName().equals(name) && s.getArtist().equals(artist)) {
+                return s;
+            }
+        }
+        return null;
     }
 }

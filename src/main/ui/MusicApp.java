@@ -11,6 +11,7 @@ public class MusicApp {
     private MusicOrganizer myMusic;
     private Scanner input;
     private String menuState;
+    private String viewedPlaylist;
 
     //  EFFECTS: runs music application
     public MusicApp() {
@@ -48,6 +49,7 @@ public class MusicApp {
         input = new Scanner(System.in);
         input.useDelimiter("\n");
         menuState = "home";
+        viewedPlaylist = "...";
     }
 
     // MODIFIES: this
@@ -62,6 +64,9 @@ public class MusicApp {
                 //System.out.println("switched to playlist");
                 processPlaylistsCommand(command);
                 break;
+            case "singlePlaylist" :
+                //System.out.println("switched to singlePlay");
+                processSinglePlaylistCommand(command);
             default:
                 break;
         }
@@ -88,15 +93,37 @@ public class MusicApp {
             menuState = "home";
             showHomeMenu();
         } else if (command.equals("x")) {
-            doChoosePlaylistToView();
-            menuState = "home";
-            showHomeMenu();
+            if (!doChoosePlaylistToView()) {
+                menuState = "home";
+                showHomeMenu();
+            }
         } else if (command.equals("h")) {
             //System.out.println("home state activated");
             menuState = "home";
             showHomeMenu();
         } else {
             System.out.println("Playlist action is invalid. Please select again.");
+        }
+    }
+
+    //MODIFIES: this
+    //EFFECTS: processes user commands in single playlist menu
+    private void processSinglePlaylistCommand(String command) {
+        if (command.equals("s")) {
+            doAddSong();
+        } else if (command.equals("r")) {
+            doRemoveSong();
+        } else if (command.equals("z")) {
+            if (!doChooseSongToView()) {
+                menuState = "playlists";
+                showPlaylistsMenu();
+            }
+        } else if (command.equals("h")) {
+            //System.out.println("home state activated");
+            menuState = "home";
+            showHomeMenu();
+        } else {
+            System.out.println("Single playlist action is invalid. Please select again.");
         }
     }
 
@@ -120,56 +147,24 @@ public class MusicApp {
 
     }
 
+    //EFFECTS: shows the options for a selected playlist with a given name
+    private void showSinglePlaylistMenu(String name) {
+        System.out.println("***** Songs in Playlist: " + name + " *****");
+        showSongsInPlaylist(name);
+        System.out.println("\nChoose an option: ");
+        System.out.println("\tadd a new song - s");
+        System.out.println("\tremove a song - r");
+        System.out.println("\tview an existing song - z");
+        System.out.println("\treturn to home menu - h");
+        System.out.println("\texit app - e");
+    }
+
     //EFFECTS: shows all of user's created playlists
     private void showAllPlaylists(MusicOrganizer mo) {
         ArrayList<Playlist> allPlaylists = mo.getAllPlaylists();
         for (Playlist p : allPlaylists) {
             System.out.println("\t" + p.getName());
         }
-    }
-
-    // MODIFIES: this, MusicOrganizer
-    // EFFECTS: carries out the action of adding a playlist to the music organizer
-    private void doAddPlaylist() {
-        System.out.println("What would you like to call your new playlist? Enter a name: ");
-        String nameInput = input.next();
-        myMusic.addPlaylist(nameInput);
-        System.out.println("Successfully added! \n*** Your Playlists ***");
-        showAllPlaylists(myMusic);
-    }
-
-    //EFFECTS: chooses a playlist to view in detail based on user input
-    private void doChoosePlaylistToView() {
-        if (!(myMusic.getAllPlaylists().size() == 0)) {
-            System.out.println("Which playlist would you like to view? Enter a name: ");
-            String nameInput = input.next();
-            while (!myMusic.doesPlaylistExist(nameInput)) {
-                System.out.println("Playlist name not found. Please enter another playlist name.");
-                nameInput = input.next();
-            }
-            //menuState = "singlePlaylist";
-            showSinglePlaylistMenu(nameInput);
-        } else {
-            System.out.println("There are no playlists to view. Maybe add one? (y/n)");
-            String answer = input.next();
-            answer.toLowerCase();
-            if (answer.equals("y")) {
-                doAddPlaylist();
-            } else {
-                System.out.println("Okay, fine. But you'll have no music!");
-            }
-        }
-    }
-
-    //EFFECTS: shows the options for a selected playlist with a given name
-    private void showSinglePlaylistMenu(String name) {
-        System.out.println("~ Songs in Playlist: " + name + " ~");
-        showSongsInPlaylist(name);
-        System.out.println("\nChoose an option: ");
-        System.out.println("\tadd a new song - s");
-        System.out.println("\tview an existing song - z");
-        System.out.println("\treturn to home menu - h");
-        System.out.println("\texit app - e");
     }
 
     //EFFECTS: shows all the songs in a playlist with a given name
@@ -179,5 +174,109 @@ public class MusicApp {
             System.out.println(s.getShortInfo());
         }
     }
+
+    // MODIFIES: this, MusicOrganizer
+    // EFFECTS: carries out the action of adding a playlist to the music organizer
+    private void doAddPlaylist() {
+        System.out.println("What would you like to call your new playlist? Enter a name: ");
+        String nameInput = input.next();
+        myMusic.addPlaylist(nameInput);
+        System.out.println("Successfully added! \n*** Your Updated Playlists ***");
+        showAllPlaylists(myMusic);
+    }
+
+    //MODIFIES: this
+    //EFFECTS: chooses a playlist to view based on user input, returns false if no playlists exist to view
+    private boolean doChoosePlaylistToView() {
+        if (!(myMusic.getAllPlaylists().size() == 0)) {
+            System.out.println("Which playlist would you like to view? Enter a name: ");
+            String nameInput = input.next();
+            while (!myMusic.doesPlaylistExist(nameInput)) {
+                System.out.println("Playlist name not found. Please enter another playlist name.");
+                nameInput = input.next();
+            }
+            menuState = "singlePlaylist";
+            viewedPlaylist = nameInput;
+            showSinglePlaylistMenu(nameInput);
+            return true;
+        } else {
+            System.out.println("There are no playlists to view. Maybe add one? (y/n)");
+            String answer = input.next();
+            answer.toLowerCase();
+            if (answer.equals("y")) {
+                doAddPlaylist();
+            } else {
+                System.out.println("Okay, fine. But you'll have no music!");
+            }
+            return false;
+        }
+    }
+
+    //MODIFIES: this, Playlist
+    //EFFECTS: carries out the action of adding user-inputted song to a playlist
+    private void doAddSong() {
+        System.out.println("So, you want to add a song? Enter the song name: ");
+        String nameInput = input.next();
+        System.out.println("Haven't heard of that one before. Who's it by? Enter the song artist: ");
+        String artistInput = input.next();
+        Song songInput = new Song(nameInput, artistInput);
+
+        Playlist thisPlaylist = myMusic.getPlaylistByName(viewedPlaylist);
+        thisPlaylist.addSong(songInput);
+        System.out.println("Successfully added!");
+        menuState = "singlePlaylist";
+        showSinglePlaylistMenu(viewedPlaylist);
+    }
+
+    //MODIFIES: this, Playlist
+    //EFFECTS: carries out the action of removing a song from a playlist
+    private void doRemoveSong() {
+        Playlist thisPlaylist = myMusic.getPlaylistByName(viewedPlaylist);
+
+        if (!(thisPlaylist.getSongs().size() == 0)) {
+            System.out.println("Didn't work for ya, eh? Enter the song name to be removed: ");
+            String nameInput = input.next();
+            System.out.println("Okay. And to confirm, who's it by? Enter the song artist: ");
+            String artistInput = input.next();
+
+            if (thisPlaylist.doesSongExist(nameInput, artistInput)) {
+                Song toBeRemoved = thisPlaylist.getSongByNameAndArtist(nameInput, artistInput);
+                thisPlaylist.removeSong(toBeRemoved);
+                System.out.println("Removed from " + viewedPlaylist + " successfully!");
+            } else {
+                System.out.println("That song doesn't appear in the playlist, so there's nothing to be removed.");
+            }
+        } else {
+            System.out.println("Hey, don't get too ahead of yourself. The playlist is already empty.");
+        }
+        menuState = "singlePlaylist";
+        showSinglePlaylistMenu(viewedPlaylist);
+    }
+
+    //MODIFIES: this
+    //EFFECTS: chooses a song to view based on user input, returns false if no songs in playlist to view
+    private boolean doChooseSongToView() {
+        Playlist thisPlaylist = myMusic.getPlaylistByName(viewedPlaylist);
+        if (!(thisPlaylist.getSongs().size() == 0)) {
+            System.out.println("Which song would you like to view? Enter the song name: ");
+            String nameInput = input.next();
+            System.out.println("Alright, but remind me, who's it by? Enter the artist name: ");
+            String artistInput = input.next();
+            while (!thisPlaylist.doesSongExist(nameInput, artistInput)) {
+                System.out.println("Song or artist not found. Please enter another song name.");
+                nameInput = input.next();
+                System.out.println("Alright, but remind me, who's it by? Enter the artist name: ");
+                artistInput = input.next();
+            }
+            //menuState = "singleSong";
+            //viewedSong = nameInput;
+            //showSingleSongMenu(nameInput);
+            return true;
+        } else {
+            System.out.println("There are no songs to view in this playlist. Maybe try another playlist?");
+            return false;
+        }
+    }
+
 
 }
