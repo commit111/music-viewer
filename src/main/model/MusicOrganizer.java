@@ -2,10 +2,10 @@ package model;
 
 import java.util.ArrayList;
 
+//Represents a music organizer with a list of playlists.
 public class MusicOrganizer {
     private ArrayList<Playlist> allPlaylists;
 
-    //creates a new music organizer with an empty list of playlists
     public MusicOrganizer() {
         this.allPlaylists = new ArrayList<>();
     }

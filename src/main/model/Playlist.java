@@ -2,11 +2,12 @@ package model;
 
 import java.util.ArrayList;
 
+//Represents a playlist with a name and a list of songs.
 public class Playlist {
     private String name;
     private ArrayList<Song> songs;
 
-    //creates a playlist with a name and a list of songs
+    //REQUIRES: name is a non-empty string
     public Playlist(String name) {
         this.name = name;
         this.songs = new ArrayList<>();

@@ -23,7 +23,6 @@ public class MusicApp {
     private void runMusicApp() {
         boolean appOn = true;
         String command = null;
-
         init();
         showHomeMenu();
 
@@ -90,11 +89,10 @@ public class MusicApp {
             doAddPlaylist();
             showPlaylistsMenu();
         } else if (command.equals("x")) {
-            if (doChoosePlaylistToView()) {
-                return;
+            if (!doChoosePlaylistToView()) {
+                menuState = "playlists";
+                showPlaylistsMenu();
             }
-            menuState = "playlists";
-            showPlaylistsMenu();
         } else if (command.equals("h")) {
             //System.out.println("home state activated");
             menuState = "home";
@@ -199,7 +197,7 @@ public class MusicApp {
         } else {
             System.out.println("There are no playlists to view. Maybe add one? (y/n)");
             String answer = input.next();
-            answer.toLowerCase();
+            answer = answer.toLowerCase();
             if (answer.equals("y")) {
                 doAddPlaylist();
             } else {
@@ -212,16 +210,16 @@ public class MusicApp {
     //MODIFIES: this, Playlist
     //EFFECTS: carries out the action of adding a user-inputted song to a viewed playlist
     private void doAddSong() {
+        Playlist thisPlaylist = myMusic.getPlaylistByName(viewedPlaylist);
+
         System.out.println("So, you want to add a song? Enter the song name: ");
         String nameInput = input.next();
         System.out.println("Haven't heard of that one before. Who's it by? Enter the song artist: ");
         String artistInput = input.next();
-
         Song songInput = new Song(nameInput, artistInput);
-        Playlist thisPlaylist = myMusic.getPlaylistByName(viewedPlaylist);
+
         thisPlaylist.addSong(songInput);
         System.out.println("Successfully added!");
-
         menuState = "singlePlaylist";
         showSinglePlaylistMenu(viewedPlaylist);
     }
