@@ -33,7 +33,6 @@ public class MusicApp {
             command = command.toLowerCase();
 
             if (command.equals("e")) {
-                appOn = false;
                 break;
             } else {
                 processCommand(command);
@@ -43,28 +42,28 @@ public class MusicApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: initializes a music organizer
+    // EFFECTS: initializes a music organizer, menu state, and name of viewed playlist
     private void init() {
         myMusic = new MusicOrganizer();
         input = new Scanner(System.in);
         input.useDelimiter("\n");
         menuState = "home";
-        viewedPlaylist = "...";
+        viewedPlaylist = "";
     }
 
     // MODIFIES: this
     // EFFECTS: processes user command based on menu state
     private void processCommand(String command) {
         switch (menuState) {
-            case "home" :
+            case "home":
                 //System.out.println("switched to home");
                 processHomeCommand(command);
                 break;
-            case "playlists" :
+            case "playlists":
                 //System.out.println("switched to playlist");
                 processPlaylistsCommand(command);
                 break;
-            case "singlePlaylist" :
+            case "singlePlaylist":
                 //System.out.println("switched to singlePlay");
                 processSinglePlaylistCommand(command);
             default:
@@ -72,9 +71,8 @@ public class MusicApp {
         }
     }
 
-
     // MODIFIES: this
-    // EFFECTS: processes user command in home menu
+    // EFFECTS: processes user command in home menu state
     private void processHomeCommand(String command) {
         if (command.equals("v")) {
             //System.out.println("playlist state activated");
@@ -86,28 +84,28 @@ public class MusicApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: processes user command in playlists menu
+    // EFFECTS: processes user command in playlists menu state
     private void processPlaylistsCommand(String command) {
         if (command.equals("p")) {
             doAddPlaylist();
-            menuState = "home";
-            showHomeMenu();
+            showPlaylistsMenu();
         } else if (command.equals("x")) {
-            if (!doChoosePlaylistToView()) {
-                menuState = "home";
-                showHomeMenu();
+            if (doChoosePlaylistToView()) {
+                return;
             }
+            menuState = "playlists";
+            showPlaylistsMenu();
         } else if (command.equals("h")) {
             //System.out.println("home state activated");
             menuState = "home";
             showHomeMenu();
         } else {
-            System.out.println("Playlist action is invalid. Please select again.");
+            System.out.println("Playlists action is invalid. Please select again.");
         }
     }
 
     //MODIFIES: this
-    //EFFECTS: processes user commands in single playlist menu
+    //EFFECTS: processes user command in single playlist menu state
     private void processSinglePlaylistCommand(String command) {
         if (command.equals("s")) {
             doAddSong();
@@ -181,12 +179,11 @@ public class MusicApp {
         System.out.println("What would you like to call your new playlist? Enter a name: ");
         String nameInput = input.next();
         myMusic.addPlaylist(nameInput);
-        System.out.println("Successfully added! \n*** Your Updated Playlists ***");
-        showAllPlaylists(myMusic);
+        System.out.println("Successfully added new playlist!");
     }
 
     //MODIFIES: this
-    //EFFECTS: chooses a playlist to view based on user input, returns false if no playlists exist to view
+    //EFFECTS: chooses a playlist to view based on user input, returns false if music organizer has no playlists to view
     private boolean doChoosePlaylistToView() {
         if (!(myMusic.getAllPlaylists().size() == 0)) {
             System.out.println("Which playlist would you like to view? Enter a name: ");
@@ -213,23 +210,24 @@ public class MusicApp {
     }
 
     //MODIFIES: this, Playlist
-    //EFFECTS: carries out the action of adding user-inputted song to a playlist
+    //EFFECTS: carries out the action of adding a user-inputted song to a viewed playlist
     private void doAddSong() {
         System.out.println("So, you want to add a song? Enter the song name: ");
         String nameInput = input.next();
         System.out.println("Haven't heard of that one before. Who's it by? Enter the song artist: ");
         String artistInput = input.next();
-        Song songInput = new Song(nameInput, artistInput);
 
+        Song songInput = new Song(nameInput, artistInput);
         Playlist thisPlaylist = myMusic.getPlaylistByName(viewedPlaylist);
         thisPlaylist.addSong(songInput);
         System.out.println("Successfully added!");
+
         menuState = "singlePlaylist";
         showSinglePlaylistMenu(viewedPlaylist);
     }
 
     //MODIFIES: this, Playlist
-    //EFFECTS: carries out the action of removing a song from a playlist
+    //EFFECTS: carries out the action of removing a song from a viewed playlist, if it exists
     private void doRemoveSong() {
         Playlist thisPlaylist = myMusic.getPlaylistByName(viewedPlaylist);
 
@@ -254,7 +252,7 @@ public class MusicApp {
     }
 
     //MODIFIES: this
-    //EFFECTS: chooses a song to view based on user input, returns false if no songs in playlist to view
+    //EFFECTS: chooses a song to view based on user input, returns false if viewed playlist has no songs to view
     private boolean doChooseSongToView() {
         Playlist thisPlaylist = myMusic.getPlaylistByName(viewedPlaylist);
         if (!(thisPlaylist.getSongs().size() == 0)) {

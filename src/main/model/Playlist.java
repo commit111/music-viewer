@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-//import model.Song;
 
 public class Playlist {
     private String name;
@@ -10,7 +9,7 @@ public class Playlist {
     //creates a playlist with a name and a list of songs
     public Playlist(String name) {
         this.name = name;
-        this.songs = new ArrayList<Song>();
+        this.songs = new ArrayList<>();
     }
 
     public String getName() {
@@ -43,7 +42,7 @@ public class Playlist {
         return false;
     }
 
-    //EFFECTS: returns the first song with a given name if it is in the playlist, null otherwise
+    //EFFECTS: returns the first song with a given name and artist if it is in the playlist, null otherwise
     public Song getSongByNameAndArtist(String name, String artist) {
         for (Song s : this.getSongs()) {
             if (s.getName().equals(name) && s.getArtist().equals(artist)) {

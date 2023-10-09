@@ -1,17 +1,13 @@
 package model;
 
-//import model.Playlist;
-//import model.Song;
-
 import java.util.ArrayList;
 
 public class MusicOrganizer {
     private ArrayList<Playlist> allPlaylists;
-    private ArrayList<Song> allSongs;
 
     //creates a new music organizer with an empty list of playlists
     public MusicOrganizer() {
-        this.allPlaylists = new ArrayList<Playlist>();
+        this.allPlaylists = new ArrayList<>();
     }
 
     public ArrayList<Playlist> getAllPlaylists() {
@@ -20,7 +16,7 @@ public class MusicOrganizer {
 
     //EFFECTS: returns true if playlist with a given name exists in the system, false otherwise
     public boolean doesPlaylistExist(String name) {
-        for (Playlist p: this.getAllPlaylists()) {
+        for (Playlist p : this.getAllPlaylists()) {
             if (p.getName().equals(name)) {
                 return true;
             }
@@ -30,7 +26,7 @@ public class MusicOrganizer {
 
     //EFFECTS: returns the first playlist with a given name
     public Playlist getPlaylistByName(String name) {
-        for (Playlist p: this.getAllPlaylists()) {
+        for (Playlist p : this.getAllPlaylists()) {
             if (p.getName().equals(name)) {
                 return p;
             }
@@ -44,7 +40,6 @@ public class MusicOrganizer {
         Playlist playlist = new Playlist(name);
         this.allPlaylists.add(playlist);
     }
-
 
 
 }

@@ -4,9 +4,9 @@ public class Song {
     private String name;
     private String artist;
     private String description;
+
     //creates a song with a name and an artist and an empty description.
     //the description for the song can be changed later on.
-
     public Song(String name, String artist) {
         this.name = name;
         this.artist = artist;
@@ -29,14 +29,13 @@ public class Song {
         return description;
     }
 
-    public void setDescription(String desc) {
-        description = desc;
-    }
-
     public String getLongInfo() {
         return name + " by " + artist + "\ndetails:" + description;
     }
 
-
+    //MODIFIES: this
+    public void setDescription(String desc) {
+        description = desc;
+    }
 
 }
