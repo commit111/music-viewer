@@ -12,6 +12,7 @@ public class MusicApp {
     private Scanner input;
     private String menuState;
     private String viewedPlaylist;
+    private Song viewedSong;
 
     //  EFFECTS: runs music application
     public MusicApp() {
@@ -48,6 +49,7 @@ public class MusicApp {
         input.useDelimiter("\n");
         menuState = "home";
         viewedPlaylist = "";
+        viewedSong = new Song("", "");
     }
 
     // MODIFIES: this
@@ -63,8 +65,13 @@ public class MusicApp {
                 processPlaylistsCommand(command);
                 break;
             case "singlePlaylist":
-                //System.out.println("switched to singlePlay");
+                //System.out.println("switched to singlePlaylist");
                 processSinglePlaylistCommand(command);
+                break;
+            case "singleSong":
+                //System.out.println("switched to singleSong");
+                processSingleSongCommand(command);
+                break;
             default:
                 break;
         }
@@ -123,6 +130,21 @@ public class MusicApp {
         }
     }
 
+    //MODIFIES: this
+    //EFFECTS: processes user command in single song state
+    private void processSingleSongCommand(String command) {
+        if (command.equals("d")) {
+            //System.out.println("getting ready to edit details...");
+            doEditSongDetails();
+        } else if (command.equals("h")) {
+            //System.out.println("home state activated");
+            menuState = "home";
+            showHomeMenu();
+        } else {
+            System.out.println("Single song action is invalid. Please select again.");
+        }
+    }
+
     //EFFECTS: shows user the home menu options
     private void showHomeMenu() {
         System.out.println("\n~ Home Menu ~");
@@ -151,6 +173,18 @@ public class MusicApp {
         System.out.println("\tadd a new song - s");
         System.out.println("\tremove a song - r");
         System.out.println("\tview an existing song - z");
+        System.out.println("\treturn to home menu - h");
+        System.out.println("\texit app - e");
+    }
+
+    //EFFECTS: shows the options for a selected song
+    private void showSingleSongMenu(Song s) {
+        String name = s.getName();
+        String artist = s.getArtist();
+        System.out.println("***** Song: " + name + " by " + artist + " *****");
+        System.out.println("Details: " + s.getDescription());
+        System.out.println("\nChoose an option: ");
+        System.out.println("\tedit song details - d");
         System.out.println("\treturn to home menu - h");
         System.out.println("\texit app - e");
     }
@@ -264,9 +298,9 @@ public class MusicApp {
                 System.out.println("Alright, but remind me, who's it by? Enter the artist name: ");
                 artistInput = input.next();
             }
-            //menuState = "singleSong";
-            //viewedSong = nameInput;
-            //showSingleSongMenu(nameInput);
+            menuState = "singleSong";
+            viewedSong = thisPlaylist.getSongByNameAndArtist(nameInput, artistInput);
+            showSingleSongMenu(viewedSong);
             return true;
         } else {
             System.out.println("There are no songs to view in this playlist. Maybe try another playlist?");
@@ -274,5 +308,16 @@ public class MusicApp {
         }
     }
 
+    //MODIFIES: this, Song
+    //EFFECTS: carries out the action of editing a selected song's details and sets menu state
+    private void doEditSongDetails() {
+        System.out.println("Enter a new description:");
+        String editedDesc = input.next();
+        viewedSong.setDescription(editedDesc);
+        System.out.println("Successfully updated song details!");
+
+        menuState = "singleSong";
+        showSingleSongMenu(viewedSong);
+    }
 
 }
