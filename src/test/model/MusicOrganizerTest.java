@@ -3,9 +3,7 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MusicOrganizerTest {
     MusicOrganizer moTest;
@@ -37,15 +35,15 @@ public class MusicOrganizerTest {
     @Test
     public void testGetPlaylistByName() {
         assertEquals(0, moTest.getAllPlaylists().size());
-        assertEquals(null, moTest.getPlaylistByName("test2Playlist"));
+        assertNull(moTest.getPlaylistByName("test2Playlist"));
 
         moTest.addPlaylist("test1");
         moTest.addPlaylist("test2");
         moTest.addPlaylist("test3");
         assertEquals(3, moTest.getAllPlaylists().size());
 
-        assertTrue(moTest.getPlaylistByName("test2").getName().equals("test2"));
-        assertFalse(moTest.getPlaylistByName("test2") == null);
+        assertEquals("test2", moTest.getPlaylistByName("test2").getName());
+        assertNotNull(moTest.getPlaylistByName("test2"));
         assertEquals(3, moTest.getAllPlaylists().size());
     }
 
@@ -56,7 +54,7 @@ public class MusicOrganizerTest {
         moTest.addPlaylist("test1");
 
         assertEquals(1, moTest.getAllPlaylists().size());
-        assertTrue(moTest.getAllPlaylists().get(0).getName().equals("test1"));
+        assertEquals("test1", moTest.getAllPlaylists().get(0).getName());
     }
 
     @Test
@@ -66,20 +64,20 @@ public class MusicOrganizerTest {
         moTest.addPlaylist("test1");
 
         assertEquals(1, moTest.getAllPlaylists().size());
-        assertTrue(moTest.getAllPlaylists().get(0).getName().equals("test1"));
+        assertEquals("test1", moTest.getAllPlaylists().get(0).getName());
 
         moTest.addPlaylist("test2");
 
         assertEquals(2, moTest.getAllPlaylists().size());
-        assertTrue(moTest.getAllPlaylists().get(0).getName().equals("test1"));
-        assertTrue(moTest.getAllPlaylists().get(1).getName().equals("test2"));
+        assertEquals("test1", moTest.getAllPlaylists().get(0).getName());
+        assertEquals("test2", moTest.getAllPlaylists().get(1).getName());
 
         moTest.addPlaylist("test3");
 
         assertEquals(3, moTest.getAllPlaylists().size());
-        assertTrue(moTest.getAllPlaylists().get(0).getName().equals("test1"));
-        assertTrue(moTest.getAllPlaylists().get(1).getName().equals("test2"));
-        assertTrue(moTest.getAllPlaylists().get(2).getName().equals("test3"));
+        assertEquals("test1", moTest.getAllPlaylists().get(0).getName());
+        assertEquals("test2", moTest.getAllPlaylists().get(1).getName());
+        assertEquals("test3", moTest.getAllPlaylists().get(2).getName());
 
     }
 

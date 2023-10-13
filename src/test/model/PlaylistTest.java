@@ -3,9 +3,7 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PlaylistTest {
     Playlist pl1;
@@ -45,7 +43,7 @@ public class PlaylistTest {
         Song other2 = new Song("other2Song", "other2Artist");
 
         assertEquals(0, pl1.getSongs().size());
-        assertEquals(null, pl1.getSongByNameAndArtist("testSong", "testArtist"));
+        assertNull(pl1.getSongByNameAndArtist("testSong", "testArtist"));
 
         pl1.addSong(other);
         pl1.addSong(sample);
@@ -53,9 +51,9 @@ public class PlaylistTest {
         assertEquals(3, pl1.getSongs().size());
 
         assertEquals(sample, pl1.getSongByNameAndArtist("testSong", "testArtist"));
-        assertEquals(null, pl1.getSongByNameAndArtist("notSong", "testArtist"));
-        assertEquals(null, pl1.getSongByNameAndArtist("testSong", "notArtist"));
-        assertEquals(null, pl1.getSongByNameAndArtist("notSong", "notArtist"));
+        assertNull(pl1.getSongByNameAndArtist("notSong", "testArtist"));
+        assertNull(pl1.getSongByNameAndArtist("testSong", "notArtist"));
+        assertNull(pl1.getSongByNameAndArtist("notSong", "notArtist"));
         assertEquals(3, pl1.getSongs().size());
     }
 
