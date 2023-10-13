@@ -27,11 +27,15 @@ public class PlaylistTest {
 
         assertFalse(pl1.doesSongExist("notSong", "notArtist"));
         assertFalse(pl1.doesSongExist("someSong", "someArtist"));
+        assertFalse(pl1.doesSongExist("someSong", "notArtist"));
+        assertFalse(pl1.doesSongExist("notSong", "someArtist"));
 
         pl1.addSong(sample);
 
         assertTrue(pl1.doesSongExist("notSong", "notArtist"));
         assertFalse(pl1.doesSongExist("someSong", "someArtist"));
+        assertFalse(pl1.doesSongExist("someSong", "notArtist"));
+        assertFalse(pl1.doesSongExist("notSong", "someArtist"));
     }
 
     @Test
@@ -49,7 +53,9 @@ public class PlaylistTest {
         assertEquals(3, pl1.getSongs().size());
 
         assertEquals(sample, pl1.getSongByNameAndArtist("testSong", "testArtist"));
-        assertFalse(pl1.getSongByNameAndArtist("testSong", "testArtist") == null);
+        assertEquals(null, pl1.getSongByNameAndArtist("notSong", "testArtist"));
+        assertEquals(null, pl1.getSongByNameAndArtist("testSong", "notArtist"));
+        assertEquals(null, pl1.getSongByNameAndArtist("notSong", "notArtist"));
         assertEquals(3, pl1.getSongs().size());
     }
 

@@ -22,25 +22,20 @@ public class MusicOrganizerTest {
 
     @Test
     public void testDoesPlaylistExist() {
-        Playlist testPl = new Playlist("testPlaylist");
-
         assertEquals(0, moTest.getAllPlaylists().size());
-        assertFalse(moTest.doesPlaylistExist("testPlaylist"));
+        assertFalse(moTest.doesPlaylistExist("test2"));
 
-        moTest.addPlaylist("testPlaylist");
+        moTest.addPlaylist("test1");
+        moTest.addPlaylist("test2");
+        moTest.addPlaylist("test3");
 
-        assertEquals(1, moTest.getAllPlaylists().size());
-        assertEquals("testPlaylist", moTest.getAllPlaylists().get(0).getName());
-        assertEquals(0, moTest.getAllPlaylists().get(0).getSongs().size());
-        assertTrue(moTest.doesPlaylistExist("testPlaylist"));
+        assertEquals(3, moTest.getAllPlaylists().size());
+        assertEquals("test2", moTest.getAllPlaylists().get(1).getName());
+        assertTrue(moTest.doesPlaylistExist("test2"));
     }
 
     @Test
     public void testGetPlaylistByName() {
-        Playlist test1 = new Playlist("test1");
-        Playlist test2 = new Playlist("test2");
-        Playlist test3 = new Playlist("test3");
-
         assertEquals(0, moTest.getAllPlaylists().size());
         assertEquals(null, moTest.getPlaylistByName("test2Playlist"));
 
@@ -56,8 +51,6 @@ public class MusicOrganizerTest {
 
     @Test
     public void testAddPlaylistOnce() {
-        Playlist test1 = new Playlist("test1");
-
         assertEquals(0, moTest.getAllPlaylists().size());
 
         moTest.addPlaylist("test1");
@@ -68,10 +61,6 @@ public class MusicOrganizerTest {
 
     @Test
     public void testAddPlaylistMultipleTimes() {
-        Playlist test1 = new Playlist("test1");
-        Playlist test2 = new Playlist("test2");
-        Playlist test3 = new Playlist("test3");
-
         assertEquals(0, moTest.getAllPlaylists().size());
 
         moTest.addPlaylist("test1");
