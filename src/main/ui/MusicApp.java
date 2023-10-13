@@ -131,11 +131,12 @@ public class MusicApp {
     }
 
     //MODIFIES: this
-    //EFFECTS: processes user command in single song state
+    //EFFECTS: processes user command in single song menu state
     private void processSingleSongCommand(String command) {
         if (command.equals("d")) {
-            //System.out.println("getting ready to edit details...");
             doEditSongDetails();
+        } else if (command.equals("l")) {
+            doPlaySong();
         } else if (command.equals("h")) {
             //System.out.println("home state activated");
             menuState = "home";
@@ -182,9 +183,10 @@ public class MusicApp {
         String name = s.getName();
         String artist = s.getArtist();
         System.out.println("***** Song: " + name + " by " + artist + " *****");
-        System.out.println("Details: " + s.getDescription());
+        showSongDetails(s);
         System.out.println("\nChoose an option: ");
         System.out.println("\tedit song details - d");
+        System.out.println("\tplay the song - l");
         System.out.println("\treturn to home menu - h");
         System.out.println("\texit app - e");
     }
@@ -203,6 +205,23 @@ public class MusicApp {
         for (Song s : thisPlaylist.getSongs()) {
             System.out.println(s.getShortInfo());
         }
+    }
+
+    //EFFECTS: shows the detailed information view for a song
+    private void showSongDetails(Song s) {
+        System.out.println("Details: " + s.getDescription());
+        System.out.println("You've played this song " + s.getTimesPlayed().toString() + " times!");
+    }
+
+    //MODIFIES: this, Song
+    //EFFECTS: carries out the action of playing a song
+    private void doPlaySong() {
+        Song thisSong = viewedSong;
+        thisSong.increaseTimesPlayed();
+        System.out.println("*** Playing song... *** "
+                + "\nYou've now played it " + thisSong.getTimesPlayed().toString() + " times!\n");
+        menuState = "singleSong";
+        showSingleSongMenu(viewedSong);
     }
 
     // MODIFIES: this, MusicOrganizer
@@ -309,7 +328,7 @@ public class MusicApp {
     }
 
     //MODIFIES: this, Song
-    //EFFECTS: carries out the action of editing a selected song's details and sets menu state
+    //EFFECTS: carries out the action of editing a selected song's details
     private void doEditSongDetails() {
         System.out.println("Enter a new description:");
         String editedDesc = input.next();
