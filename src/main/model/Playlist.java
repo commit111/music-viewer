@@ -7,7 +7,8 @@ public class Playlist {
     private String name;
     private ArrayList<Song> songs;
 
-    //REQUIRES: name is a non-empty string
+    //Constructor
+    //EFFECTS: creates a playlist with a name and empty list of songs
     public Playlist(String name) {
         this.name = name;
         this.songs = new ArrayList<>();
@@ -19,18 +20,6 @@ public class Playlist {
 
     public ArrayList<Song> getSongs() {
         return songs;
-    }
-
-    //MODIFIES: this
-    //EFFECTS: adds a song to the playlist
-    public void addSong(Song song) {
-        this.songs.add(song);
-    }
-
-    //MODIFIES: this
-    //EFFECTS: removes a song from the playlist
-    public void removeSong(Song song) {
-        this.songs.remove(song);
     }
 
     //EFFECTS: returns true if song with a given name and artist exists in the playlist, false otherwise
@@ -52,4 +41,17 @@ public class Playlist {
         }
         return null;
     }
+
+    //MODIFIES: this
+    //EFFECTS: adds a song to the playlist
+    public void addSong(Song song) {
+        this.songs.add(song);
+    }
+
+    //MODIFIES: this
+    //EFFECTS: removes a song from the playlist
+    public void removeSong(Song song) {
+        this.songs.remove(song);
+    }
+
 }

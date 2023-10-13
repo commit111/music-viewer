@@ -5,6 +5,3 @@ public class Main {
         MusicApp musicApp = new MusicApp();
     }
 }
-
-// TO DO:
-// - make tests for methods in mo, playlist, song

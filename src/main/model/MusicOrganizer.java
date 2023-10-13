@@ -6,6 +6,8 @@ import java.util.ArrayList;
 public class MusicOrganizer {
     private ArrayList<Playlist> allPlaylists;
 
+    //Constructor
+    //EFFECTS: creates a music organizer with a name and empty list of playlists
     public MusicOrganizer() {
         this.allPlaylists = new ArrayList<>();
     }
@@ -40,6 +42,5 @@ public class MusicOrganizer {
         Playlist playlist = new Playlist(name);
         this.allPlaylists.add(playlist);
     }
-
 
 }

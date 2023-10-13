@@ -1,6 +1,6 @@
 package model;
 
-//Represents a song with a name and an artist and a description.
+//Represents a song with a name, an artist, a description and number of times played.
 //The description is empty at the start when the song is created, and can be edited later on.
 public class Song {
     private String name;
@@ -8,7 +8,8 @@ public class Song {
     private String description;
     private Integer timesPlayed;
 
-    //REQUIRES: name is a non-empty string, artist is a non-empty string
+    //Constructor
+    //EFFECTS: creates a song with a name, artist, description, and number of times played
     public Song(String name, String artist) {
         this.name = name;
         this.artist = artist;
@@ -32,14 +33,14 @@ public class Song {
         return timesPlayed;
     }
 
-    //EFFECTS: returns the name and artist together for a song
-    public String getShortInfo() {
-        return name + " by " + artist;
-    }
-
     //MODIFIES: this
     public void setDescription(String desc) {
         description = desc;
+    }
+
+    //EFFECTS: returns the name and artist together for a song
+    public String getShortInfo() {
+        return name + " by " + artist;
     }
 
     //MODIFIES: this
@@ -47,6 +48,5 @@ public class Song {
     public void increaseTimesPlayed() {
         timesPlayed++;
     }
-
 
 }
