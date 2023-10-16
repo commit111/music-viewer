@@ -26,4 +26,6 @@ playlists in a Java application.
 - As a user, I want to be able to view a list of songs on a playlist
 - As a user, I want to be able to remove a song from a playlist
 - As a user, I want to be able to edit the details of a song
-- As a user, I want to be able to create and save multiple playlists 
+- As a user, I want to be able to create multiple playlists 
+- As a user, I want to be able to optionally save my music data to file
+- As a user, I want to be able to optionally load my music data from file
