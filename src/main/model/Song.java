@@ -1,16 +1,27 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 //Represents a song with a name, an artist, a description and number of times played.
 //The description is empty at the start when the song is created, and can be edited later on.
-public class Song {
+public class Song implements Writable {
     private String name;
     private String artist;
     private String description;
-    private Integer timesPlayed;
+    private int timesPlayed;
 
     //Constructor
     //EFFECTS: creates a song with a name, artist, description, and number of times played
     public Song(String name, String artist) {
+        this.name = name;
+        this.artist = artist;
+        this.description = "";
+        this.timesPlayed = 0;
+    }
+
+    //Overloaded constructor
+    public Song(String name, String artist, String description, int timesPlayed) {
         this.name = name;
         this.artist = artist;
         this.description = "";
@@ -29,7 +40,7 @@ public class Song {
         return description;
     }
 
-    public Integer getTimesPlayed() {
+    public int getTimesPlayed() {
         return timesPlayed;
     }
 
@@ -47,6 +58,17 @@ public class Song {
     //EFFECTS: adds one to the number of times song has been played
     public void increaseTimesPlayed() {
         timesPlayed++;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("artist", artist);
+        json.put("description", description);
+        json.put("timesPlayed", timesPlayed);
+
+        return json;
     }
 
 }

@@ -1,9 +1,15 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 //Represents a music organizer with a list of playlists.
-public class MusicOrganizer {
+public class MusicOrganizer implements Writable {
     private ArrayList<Playlist> allPlaylists;
 
     //Constructor
@@ -43,4 +49,30 @@ public class MusicOrganizer {
         this.allPlaylists.add(playlist);
     }
 
+
+
+    // EFFECTS: returns an unmodifiable list of playlists in this music organizer
+    public List<Playlist> getUnmodifiablePlaylists() {
+        return Collections.unmodifiableList(allPlaylists);
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("allPlaylists", allPlaylistsToJson());
+        return json;
+    }
+
+    // EFFECTS: returns playlists in this music organizer as a JSON array
+    private JSONArray allPlaylistsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Playlist p : allPlaylists) {
+            jsonArray.put(p.toJson());
+        }
+
+        return jsonArray;
+    }
+
 }
+

@@ -3,16 +3,23 @@ package ui;
 import model.MusicOrganizer;
 import model.Playlist;
 import model.Song;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MusicApp {
+    private static final String JSON_STORE = "./data/music-organizer.json";
     private MusicOrganizer myMusic;
     private Scanner input;
     private String menuState;
     private String viewedPlaylist;
     private Song viewedSong;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     //  EFFECTS: runs music application
     public MusicApp() {
@@ -41,6 +48,7 @@ public class MusicApp {
         System.out.println("\nApp closed. Thanks for using MusicOrganizer!");
     }
 
+
     // MODIFIES: this
     // EFFECTS: initializes a music organizer, menu state, and name of viewed playlist
     private void init() {
@@ -50,6 +58,8 @@ public class MusicApp {
         menuState = "home";
         viewedPlaylist = "";
         viewedSong = new Song("", "");
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
     }
 
     // MODIFIES: this
@@ -210,7 +220,7 @@ public class MusicApp {
     //EFFECTS: shows the detailed information view for a song
     private void showSongDetails(Song s) {
         System.out.println("Details: " + s.getDescription());
-        System.out.println("You've played this song " + s.getTimesPlayed().toString() + " times!");
+        System.out.println("You've played this song " + Integer.toString(s.getTimesPlayed()) + " times!");
     }
 
     //MODIFIES: this, Song
@@ -219,7 +229,7 @@ public class MusicApp {
         Song thisSong = viewedSong;
         thisSong.increaseTimesPlayed();
         System.out.println("*** Playing song... *** "
-                + "\nYou've now played it " + thisSong.getTimesPlayed().toString() + " times!\n");
+                + "\nYou've now played it " + Integer.toString(thisSong.getTimesPlayed()) + " times!\n");
         menuState = "singleSong";
         showSingleSongMenu(viewedSong);
     }
@@ -339,4 +349,27 @@ public class MusicApp {
         showSingleSongMenu(viewedSong);
     }
 
+
+    // EFFECTS: saves the music organizer object to file
+    private void saveMyMusic() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(myMusic);
+            jsonWriter.close();
+            System.out.println("Saved the music to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads music organizer object from file
+    private void loadMyMusic() {
+        try {
+            myMusic = jsonReader.read();
+            System.out.println("Loaded the music from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
 }
