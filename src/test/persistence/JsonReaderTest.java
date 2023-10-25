@@ -13,7 +13,7 @@ class JsonReaderTest extends JsonTest {
 
     @Test
     void testReaderNonExistentFile() {
-        JsonReader reader = new JsonReader("./data/noSuchFile.json");
+        JsonReader reader = new JsonReader("./data/notActualFile.json");
         try {
             MusicOrganizer mo = reader.read();
             fail("IOException expected");
@@ -23,25 +23,30 @@ class JsonReaderTest extends JsonTest {
     }
 
     @Test
-    void testReaderEmptyWorkRoom() {
-        JsonReader reader = new JsonReader("./data/testReaderEmptyWorkRoom.json");
+    void testReaderEmptyMusicOrganizer() {
+        JsonReader reader = new JsonReader("./data/testReaderEmptyMusicOrganizer.json");
         try {
             MusicOrganizer mo = reader.read();
-//            assertEquals("My work room", wr.getName());
-//            assertEquals(0, wr.numThingies());
+            assertEquals(0, mo.getAllPlaylists().size());
         } catch (IOException e) {
             fail("Couldn't read from file");
         }
     }
 
     @Test
-    void testReaderGeneralWorkRoom() {
-        JsonReader reader = new JsonReader("./data/testReaderGeneralWorkRoom.json");
+    void testReaderGeneralMusicOrganizer() {
+        JsonReader reader = new JsonReader("./data/testReaderGeneralMusicOrganizer.json");
         try {
             MusicOrganizer mo = reader.read();
-//            assertEquals("My work room", wr.getName());
-//            List<Thingy> thingies = wr.getThingies();
-//            assertEquals(2, thingies.size());
+            assertEquals(2, mo.getAllPlaylists().size());
+            assertTrue(mo.doesPlaylistExist("fall songs"));
+            assertTrue(mo.doesPlaylistExist("summer songs"));
+
+            assertTrue(mo.getPlaylistByName("fall songs").doesSongExist("hello", "adele"));
+            assertTrue(mo.getPlaylistByName("fall songs").doesSongExist("stay", "jb"));
+            assertTrue(mo.getPlaylistByName("summer songs").doesSongExist("firework", "katy perry"));
+            assertTrue(mo.getPlaylistByName("summer songs").doesSongExist("stressed out", "21p"));
+
 //            checkThingy("needle", Category.STITCHING, thingies.get(0));
 //            checkThingy("saw", Category.WOODWORK, thingies.get(1));
         } catch (IOException e) {

@@ -44,7 +44,7 @@ public class JsonReader {
     // EFFECTS: parses music organizer from JSON object and returns it
     private MusicOrganizer parseMusicOrganizer(JSONObject jsonObject) {
         MusicOrganizer mo = new MusicOrganizer();
-        JSONArray jsonArray = jsonObject.getJSONArray("playlists");
+        JSONArray jsonArray = jsonObject.getJSONArray("allPlaylists");
         for (Object json : jsonArray) {
             JSONObject nextPlaylist = (JSONObject) json;
             addPlaylist(mo, nextPlaylist);
