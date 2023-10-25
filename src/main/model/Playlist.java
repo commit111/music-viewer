@@ -67,7 +67,7 @@ public class Playlist implements Writable {
         return json;
     }
 
-    // EFFECTS: returns playlists in this music organizer as a JSON array
+    // EFFECTS: returns songs in this music organizer as a JSON array
     private JSONArray songsToJson() {
         JSONArray jsonArray = new JSONArray();
 
