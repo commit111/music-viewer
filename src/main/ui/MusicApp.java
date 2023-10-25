@@ -94,6 +94,10 @@ public class MusicApp {
             //System.out.println("playlist state activated");
             menuState = "playlists";
             showPlaylistsMenu();
+        }  else if (command.equals("f")) {
+            saveMyMusic();
+        } else if (command.equals("g")) {
+            loadMyMusic();
         } else {
             System.out.println("Home action is invalid. Please select again.");
         }
@@ -161,6 +165,8 @@ public class MusicApp {
         System.out.println("\n~ Home Menu ~");
         System.out.println("Choose an option: ");
         System.out.println("\tview your playlists - v");
+        System.out.println("\tsave your playlists to file - f");
+        System.out.println("\tload your playlists from file - g");
         System.out.println("\texit app - e");
     }
 
@@ -220,7 +226,7 @@ public class MusicApp {
     //EFFECTS: shows the detailed information view for a song
     private void showSongDetails(Song s) {
         System.out.println("Details: " + s.getDescription());
-        System.out.println("You've played this song " + Integer.toString(s.getTimesPlayed()) + " times!");
+        System.out.println("You've played this song " + s.getTimesPlayed() + " times!");
     }
 
     //MODIFIES: this, Song
@@ -229,7 +235,7 @@ public class MusicApp {
         Song thisSong = viewedSong;
         thisSong.increaseTimesPlayed();
         System.out.println("*** Playing song... *** "
-                + "\nYou've now played it " + Integer.toString(thisSong.getTimesPlayed()) + " times!\n");
+                + "\nYou've now played it " + thisSong.getTimesPlayed() + " times!\n");
         menuState = "singleSong";
         showSingleSongMenu(viewedSong);
     }
