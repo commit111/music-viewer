@@ -52,18 +52,6 @@ public class JsonReader {
         return mo;
     }
 
-    // the top level object has no key
-    // "playlists" is a json array with many "playlist" json objects
-    // "playlist" is a json object that stores songs
-    // "songs" is a json array
-    // "song" is a json object
-    // but individual data is stored inside the json object
-
-    // to write an int as a string, use:
-    // Integer.toString(timesPlayed)
-    // to read a string as an int, use:
-    // Integer.parseInt(jsonObject.getString("timesPlayed")
-
     // MODIFIES: mo
     // EFFECTS: parses a playlist from JSON object and adds it to music organizer
     private void addPlaylist(MusicOrganizer mo, JSONObject jsonObject) {

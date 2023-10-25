@@ -5,8 +5,6 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 //Represents a music organizer with a list of playlists.
 public class MusicOrganizer implements Writable {
@@ -49,12 +47,6 @@ public class MusicOrganizer implements Writable {
         this.allPlaylists.add(playlist);
     }
 
-
-
-    // EFFECTS: returns an unmodifiable list of playlists in this music organizer
-    public List<Playlist> getUnmodifiablePlaylists() {
-        return Collections.unmodifiableList(allPlaylists);
-    }
 
     @Override
     public JSONObject toJson() {
