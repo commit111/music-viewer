@@ -1,0 +1,36 @@
+{"allPlaylists": [
+    {
+        "songs": [
+            {
+                "timesPlayed": 2,
+                "artist": "adele",
+                "name": "hello",
+                "description": ""
+            },
+            {
+                "timesPlayed": 1,
+                "artist": "jb",
+                "name": "stay",
+                "description": ""
+            }
+        ],
+        "name": "fall songs"
+    },
+    {
+        "songs": [
+            {
+                "timesPlayed": 3,
+                "artist": "katy perry",
+                "name": "firework",
+                "description": ""
+            },
+            {
+                "timesPlayed": 4,
+                "artist": "21p",
+                "name": "stressed out",
+                "description": ""
+            }
+        ],
+        "name": "summer songs"
+    }
+]}

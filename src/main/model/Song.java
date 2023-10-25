@@ -24,8 +24,8 @@ public class Song implements Writable {
     public Song(String name, String artist, String description, int timesPlayed) {
         this.name = name;
         this.artist = artist;
-        this.description = "";
-        this.timesPlayed = 0;
+        this.description = description;
+        this.timesPlayed = timesPlayed;
     }
 
     public String getName() {
