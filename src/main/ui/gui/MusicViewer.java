@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 
 public class MusicViewer {
-    JFrame frame;
+    private JFrame frame;
 
     public static void main(String[] args) {
         MusicViewer mv = new MusicViewer();
@@ -17,33 +17,33 @@ public class MusicViewer {
     public MusicViewer() {
         frame = new JFrame(); //creating instance of JFrame
 
+        setUpMainMenu(frame);
+        setUpJFrameSettings(frame);
+    }
+
+    //MODIFIES: frame
+    //EFFECTS: adds a text field and main menu buttons to the frame
+    private void setUpMainMenu(JFrame frame) {
         final JTextField tf = new JTextField();
-        tf.setBounds(300,250, 150,25);
+        tf.setBounds(300,250, 150,25); //x-axis, y-axis, width, height
         tf.setText("Welcome to MusicViewer");
 
         JButton b = new JButton("Make a new playlist"); //creating instance of JButton
         JButton b2 = new JButton("View playlists");
         JButton b3 = new JButton("Exit app");
 
-
-        b.setBounds(300, 300, 150, 30); //x-axis, y-axis, width, height
-
         setMakePlaylistBtn(b, tf);
-
         setViewPlaylistBtn(b2, tf);
-
         setExitAppBtn(b3, tf);
 
         frame.add(b); //adding button in JFrame
         frame.add(b2);
         frame.add(b3);
-
         frame.add(tf);
-        setUpJFrame(frame);
     }
 
     //MODIFIES: frame, tf
-    //EFFECTS:  makes a new 'make playlist' button
+    //EFFECTS:  makes the button produce a 'make playlist' action
     private void setMakePlaylistBtn(JButton b, JTextField tf) {
         b.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -56,7 +56,7 @@ public class MusicViewer {
     }
 
     //MODIFIES: frame, tf
-    //EFFECTS:  makes a new 'view playlist' button
+    //EFFECTS:  makes the button produce a 'view playlist' action
     private void setViewPlaylistBtn(JButton b2, JTextField tf) {
         b2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -68,7 +68,7 @@ public class MusicViewer {
     }
 
     //MODIFIES: frame, tf
-    //EFFECTS:  makes a new 'exit app' button
+    //EFFECTS:  makes the button produce an 'exit app' action
     private void setExitAppBtn(JButton b3, JTextField tf) {
         b3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -86,7 +86,7 @@ public class MusicViewer {
 
     //MODIFIES: frame
     //EFFECTS: sets up the settings for the JFrame
-    private void setUpJFrame(JFrame f) {
+    private void setUpJFrameSettings(JFrame f) {
         f.add(makeBgImage());
         f.setSize(800,800); //400 width and 500 height
         f.setLayout(new FlowLayout()); //using no layout managers
@@ -108,7 +108,6 @@ public class MusicViewer {
     private JButton makeButton(String label) {
         JButton btn = new JButton(label); //creating instance of JButton
         btn.setBounds(10,100, 100,50);
-        //frame.setLayout(new FlowLayout());
         return btn;
     }
 }
