@@ -27,6 +27,7 @@ public class MusicViewer {
         final JTextField tf = new JTextField();
         tf.setBounds(300,250, 150,25); //x-axis, y-axis, width, height
         tf.setText("Welcome to MusicViewer");
+        tf.setEditable(false);
 
         JButton b = new JButton("Make a new playlist"); //creating instance of JButton
         JButton b2 = new JButton("View playlists");
