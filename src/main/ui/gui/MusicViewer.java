@@ -32,13 +32,11 @@ public class MusicViewer {
         //menuPanel.setBackground(Color.YELLOW);
         //playlistsPanel.setBackground(Color.GREEN);
 
-        menuPanel.setOpaque(false);
-        playlistsPanel.setOpaque(false);
-
         frame.add(menuPanel);
         frame.add(playlistsPanel);
 
         setUpMainMenu(menuPanel);
+        setUpPlaylistsPanel(playlistsPanel);
         setUpJFrameSettings(frame);
     }
 
@@ -60,11 +58,19 @@ public class MusicViewer {
         setSavePlaylistBtn(b3, tf);
         setExitAppBtn(b0, tf);
 
+
+        panel.add(tf);
         panel.add(b); //adding button in JFrame
         panel.add(b2);
         panel.add(b3);
         panel.add(b0);
-        panel.add(tf);
+    }
+
+    //MODIFIES: panel
+    //EFFECTS: sets up the playlist panel by adding text field
+    private void setUpPlaylistsPanel(JPanel panel) {
+        final JTextField ptf = new JTextField("Your Playlists");
+        playlistsPanel.add(ptf);
     }
 
     //MODIFIES: b, tf
@@ -142,7 +148,7 @@ public class MusicViewer {
     //EFFECTS: sets up the settings for the JFrame
     private void setUpJFrameSettings(JFrame f) throws IOException {
         f.setSize(800,800); //800 width and 800 height
-        f.setLayout(new GridLayout(1,2)); //using layout manager
+        f.setLayout(new GridLayout(1,0)); //using layout manager
         f.setVisible(true); //making the frame visible
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -209,7 +215,7 @@ public class MusicViewer {
 
     //EFFECTS: sets up the songs view menu
     private void setUpSongsViewMenu(JButton b) {
-        JPanel svPanel = new JPanel();
+        JPanel svPanel = new JPanel(new GridLayout(0,1)); //zero means it can grow infinitely
         JRadioButton r1 = new JRadioButton("Hello by Me", true);
         JRadioButton r2 = new JRadioButton("Goodbye by You");
 
