@@ -70,6 +70,7 @@ public class MusicViewer {
     //EFFECTS: sets up the playlist panel by adding text field
     private void setUpPlaylistsPanel(JPanel panel) {
         final JTextField ptf = new JTextField("Your Playlists");
+        ptf.setEditable(false);
         playlistsPanel.add(ptf);
     }
 
