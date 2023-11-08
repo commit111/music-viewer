@@ -75,8 +75,10 @@ public class MusicViewer {
             public void actionPerformed(ActionEvent e) {
                 tf.setText("Making a playlist...");
                 String playlistName = JOptionPane.showInputDialog(frame,"Enter playlist name:");
-                playlistsPanel.add(makeButton(playlistName));
-                b.revalidate();
+                JButton pb = makeButton(playlistName);
+                playlistsPanel.add(pb);
+                setPlaylistBtn(pb);
+                b.revalidate(); //makes sure button is on screen, not only on mouse hover
                 tf.setText("Welcome to MusicViewer");
             }
         });
@@ -176,6 +178,42 @@ public class MusicViewer {
         btn.setVisible(true);
         return btn;
     }
+
+
+    private void setPlaylistBtn(JButton b) {
+        b.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setUpPlaylistMenu(b);
+            }
+        });
+    }
+
+    //EFFECTS: sets up the playlist menu
+    private void setUpPlaylistMenu(JButton b) {
+        JPanel playlistMenuPanel = new JPanel();
+        JRadioButton r1 = new JRadioButton("Hello by Me", true);
+        JRadioButton r2 = new JRadioButton("Goodbye by You");
+
+        playlistMenuPanel.add(r1);
+        playlistMenuPanel.add(r2);
+
+        //use a button group tp keep radio buttons mutually exclusive
+        ButtonGroup group = new ButtonGroup();
+        group.add(r1);
+        group.add(r2);
+
+        int choice = JOptionPane.showConfirmDialog(frame, playlistMenuPanel,
+                "Select a song to view", JOptionPane.OK_CANCEL_OPTION);
+        if (choice == 0) {
+            if (r1.isSelected()) {
+                JOptionPane.showMessageDialog(frame, "helloo my sweetheart");
+            } else if (r2.isSelected()) {
+                JOptionPane.showMessageDialog(frame, "gooodbye my lover");
+            }
+        }
+    }
+
 }
 
 
