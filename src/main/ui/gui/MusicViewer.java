@@ -75,7 +75,7 @@ public class MusicViewer {
             public void actionPerformed(ActionEvent e) {
                 tf.setText("Making a playlist...");
                 String playlistName = JOptionPane.showInputDialog(frame,"Enter playlist name:");
-                JButton pb = makeButton(playlistName);
+                JButton pb = new JButton(playlistName);
                 playlistsPanel.add(pb);
                 setPlaylistBtn(pb);
                 b.revalidate(); //makes sure button is on screen, not only on mouse hover
@@ -171,15 +171,8 @@ public class MusicViewer {
         return after;
     }
 
-    //EFFECTS: makes a new button with a given label and preset bounds
-    private JButton makeButton(String label) {
-        JButton btn = new JButton(label); //creating instance of JButton
-        btn.setBounds(10,100, 100,50);
-        btn.setVisible(true);
-        return btn;
-    }
-
-
+    //MODIFIES: b
+    //EFFECTS: adds a playlist menu to the button
     private void setPlaylistBtn(JButton b) {
         b.addActionListener(new ActionListener() {
             @Override
@@ -192,8 +185,8 @@ public class MusicViewer {
     //EFFECTS: sets up the playlist menu
     private void setUpPlaylistMenu(JButton b) {
         JPanel playlistMenuPanel = new JPanel();
-        JRadioButton r1 = new JRadioButton("Hello by Me", true);
-        JRadioButton r2 = new JRadioButton("Goodbye by You");
+        JRadioButton r1 = new JRadioButton("View songs", true);
+        JRadioButton r2 = new JRadioButton("Add a song");
 
         playlistMenuPanel.add(r1);
         playlistMenuPanel.add(r2);
@@ -204,6 +197,31 @@ public class MusicViewer {
         group.add(r2);
 
         int choice = JOptionPane.showConfirmDialog(frame, playlistMenuPanel,
+                "Select an option", JOptionPane.OK_CANCEL_OPTION);
+        if (choice == 0) {
+            if (r1.isSelected()) {
+                setUpSongsViewMenu(b);
+            } else if (r2.isSelected()) {
+                JOptionPane.showMessageDialog(frame, "We'll be able to add a song later :)");
+            }
+        }
+    }
+
+    //EFFECTS: sets up the songs view menu
+    private void setUpSongsViewMenu(JButton b) {
+        JPanel svPanel = new JPanel();
+        JRadioButton r1 = new JRadioButton("Hello by Me", true);
+        JRadioButton r2 = new JRadioButton("Goodbye by You");
+
+        svPanel.add(r1);
+        svPanel.add(r2);
+
+        //use a button group tp keep radio buttons mutually exclusive
+        ButtonGroup group = new ButtonGroup();
+        group.add(r1);
+        group.add(r2);
+
+        int choice = JOptionPane.showConfirmDialog(frame, svPanel,
                 "Select a song to view", JOptionPane.OK_CANCEL_OPTION);
         if (choice == 0) {
             if (r1.isSelected()) {
@@ -213,6 +231,7 @@ public class MusicViewer {
             }
         }
     }
+
 
 }
 
