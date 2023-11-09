@@ -6,9 +6,6 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -87,28 +84,10 @@ public class MusicViewer {
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    //EFFECTS: returns a properly scaled bg image from a given file path
-    private BufferedImage makeBgImage(String filePath) throws IOException {
-        BufferedImage before = ImageIO.read(new File(filePath));
-        BufferedImage after = scaleImage(before);
-        return after;
-    }
-
-    // The code for scaleBufferedImage() can be referenced to a StackOverflow post:
-    // https://stackoverflow.com/questions/4216123/how-to-scale-a-bufferedimage
-
-    //EFFECTS: scales the buffered image
-    private BufferedImage scaleImage(BufferedImage before) {
-        double sx = 0.9;
-        double sy = 0.9;
-        int beforeWidth = before.getWidth();
-        int beforeHeight = before.getHeight();
-        BufferedImage after = new BufferedImage(beforeWidth, beforeHeight,BufferedImage.TYPE_INT_ARGB);
-        AffineTransform at = new AffineTransform();
-        at.scale(sx,sy);
-        AffineTransformOp scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-        after = scaleOp.filter(before, after);
-        return after;
+    //EFFECTS: returns an image from a given file path
+    private Image makeBgImage(String filePath) throws IOException {
+        Image image = ImageIO.read(new File(filePath));
+        return image;
     }
 
     //MODIFIES: playlistsPanel, menuPanel
@@ -275,22 +254,5 @@ public class MusicViewer {
 
 
 }
-
-
-
-
-//    //--------
-//    //OLD CODE FOR BG IMAGE USING JLabel, TO USE, CALL frame.add(makeBgImage())
-//    //EFFECTS: makes a label with a background image
-//    private JLabel makeBgImage() {
-//        ImageIcon rawImgIcon = new ImageIcon("src/main/ui/gui/abstract.png");
-//        Image resizedImg = rawImgIcon.getImage().getScaledInstance(900, 900, Image.SCALE_FAST);
-//        ImageIcon imgIcon = new ImageIcon(resizedImg);
-//        JLabel label = new JLabel(imgIcon);
-//        label.setBounds(0, 0, 900, 900); // You can use your own values
-//        return label;
-//    }
-//    //--------
-
 
 
