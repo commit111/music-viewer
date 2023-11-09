@@ -10,11 +10,12 @@ import java.io.File;
 import java.io.IOException;
 
 public class MusicViewer {
-    private JFrame frame;
-    private JPanel bgPanel;
-    private JPanel menuPanel;
-    private JPanel playlistsPanel;
-    private Image bgImage;
+    private static final String IMG_FILE_PATH = "src/main/ui/gui/abstract.png";
+
+    private final JFrame frame;
+    private final JPanel bgPanel;
+    private final JPanel menuPanel;
+    private final JPanel playlistsPanel;
     private JTextField tf;
 
     public static void main(String[] args) throws IOException {
@@ -24,9 +25,7 @@ public class MusicViewer {
     //Constructor
     public MusicViewer() throws IOException {
         frame = new JFrame(); //creating instance of JFrame
-        bgImage = makeBgImage("src/main/ui/gui/abstract.png");
-
-        bgPanel = new ImagePanel(bgImage, new GridLayout(1,0));
+        bgPanel = new ImagePanel(ImageIO.read(new File(IMG_FILE_PATH)), new GridLayout(1,0));
         playlistsPanel = new TransparentPanel(new FlowLayout());
         menuPanel = new TransparentPanel(new FlowLayout());
 
@@ -77,17 +76,11 @@ public class MusicViewer {
 
     //MODIFIES: f
     //EFFECTS: sets up the settings for the JFrame
-    private void setUpJFrameSettings(JFrame f) throws IOException {
-        f.setSize(800,800); //800 width and 800 height
+    private void setUpJFrameSettings(JFrame f) {
+        f.setSize(800,800); //width and height
         f.setLayout(new GridLayout(1,0)); //using layout manager
         f.setVisible(true); //making the frame visible
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
-
-    //EFFECTS: returns an image from a given file path
-    private Image makeBgImage(String filePath) throws IOException {
-        Image image = ImageIO.read(new File(filePath));
-        return image;
     }
 
     //MODIFIES: playlistsPanel, menuPanel
@@ -245,9 +238,9 @@ public class MusicViewer {
                 "Select a song to view", JOptionPane.OK_CANCEL_OPTION);
         if (choice == 0) {
             if (r1.isSelected()) {
-                JOptionPane.showMessageDialog(frame, "helloo my sweetheart");
+                JOptionPane.showMessageDialog(frame, "hello my sweetheart");
             } else if (r2.isSelected()) {
-                JOptionPane.showMessageDialog(frame, "gooodbye my lover");
+                JOptionPane.showMessageDialog(frame, "goodbye my lover");
             }
         }
     }
