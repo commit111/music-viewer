@@ -14,9 +14,11 @@ import java.io.IOException;
 
 public class MusicViewer {
     private JFrame frame;
+    private JPanel bgPanel;
     private JPanel menuPanel;
     private JPanel playlistsPanel;
     private Image bgImage;
+    private JTextField tf;
 
     public static void main(String[] args) throws IOException {
         MusicViewer mv = new MusicViewer();
@@ -26,14 +28,17 @@ public class MusicViewer {
     public MusicViewer() throws IOException {
         frame = new JFrame(); //creating instance of JFrame
         bgImage = makeBgImage("src/main/ui/gui/abstract.png");
-        playlistsPanel = new ImagePanel(bgImage, new FlowLayout());
-        menuPanel = new ImagePanel(bgImage, new FlowLayout());
+
+        bgPanel = new ImagePanel(bgImage, new GridLayout(1,0));
+        playlistsPanel = new TransparentPanel(new FlowLayout());
+        menuPanel = new TransparentPanel(new FlowLayout());
 
         //menuPanel.setBackground(Color.YELLOW);
         //playlistsPanel.setBackground(Color.GREEN);
 
-        frame.add(menuPanel);
-        frame.add(playlistsPanel);
+        frame.add(bgPanel);
+        bgPanel.add(menuPanel);
+        bgPanel.add(playlistsPanel);
 
         setUpMainMenu(menuPanel);
         setUpPlaylistsPanel(playlistsPanel);
@@ -43,7 +48,7 @@ public class MusicViewer {
     //MODIFIES: panel
     //EFFECTS: adds a text field and main menu buttons to the panel
     private void setUpMainMenu(JPanel panel) {
-        final JTextField tf = new JTextField();
+        tf = new JTextField();
         tf.setBounds(300,250, 150,25); //x-axis, y-axis, width, height
         tf.setText("Welcome to MusicViewer");
         tf.setEditable(false);
@@ -53,11 +58,10 @@ public class MusicViewer {
         JButton b3 = new JButton("Save playlists");
         JButton b0 = new JButton("Exit app");
 
-        setMakePlaylistBtn(b, tf);
-        setLoadPlaylistBtn(b2, tf);
-        setSavePlaylistBtn(b3, tf);
-        setExitAppBtn(b0, tf);
-
+        setMakePlaylistBtn(b);
+        setLoadPlaylistBtn(b2);
+        setSavePlaylistBtn(b3);
+        setExitAppBtn(b0);
 
         panel.add(tf);
         panel.add(b); //adding button in JFrame
@@ -71,78 +75,7 @@ public class MusicViewer {
     private void setUpPlaylistsPanel(JPanel panel) {
         final JTextField ptf = new JTextField("Your Playlists");
         ptf.setEditable(false);
-        playlistsPanel.add(ptf);
-    }
-
-    //MODIFIES: b, tf
-    //EFFECTS:  makes the button produce a 'make playlist' action
-    private void setMakePlaylistBtn(JButton b, JTextField tf) {
-        b.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                tf.setText("Making a playlist...");
-                String playlistName = JOptionPane.showInputDialog(frame,"Enter playlist name:");
-                JButton pb = new JButton(playlistName);
-                playlistsPanel.add(pb);
-                setPlaylistBtn(pb);
-                b.revalidate(); //makes sure button is on screen, not only on mouse hover
-                tf.setText("Welcome to MusicViewer");
-            }
-        });
-    }
-
-    //MODIFIES: b, tf
-    //EFFECTS:  makes the button produce a 'view playlist' action
-    private void setLoadPlaylistBtn(JButton b, JTextField tf) {
-        b.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                tf.setText("Loading playlists...");
-                int choice = JOptionPane.showConfirmDialog(frame,"Do you want to load playlists from file?",
-                        "Select an option", JOptionPane.OK_CANCEL_OPTION);
-                if (choice == 0) {
-                    //load playlists
-                    JOptionPane.showMessageDialog(frame,"There are no playlists to load from file.");
-                }
-                tf.setText("Welcome to MusicViewer");
-            }
-        });
-    }
-
-    //MODIFIES: b, tf
-    //EFFECTS:  makes the button produce a 'view playlist' action
-    private void setSavePlaylistBtn(JButton b, JTextField tf) {
-        b.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                tf.setText("Saving playlists...");
-                int choice = JOptionPane.showConfirmDialog(frame,"Do you want to save all playlists?",
-                        "Select an option", JOptionPane.OK_CANCEL_OPTION);
-                if (choice == 0) {
-                    //save playlists
-                    JOptionPane.showMessageDialog(frame,"Playlists successfully saved to file!");
-                }
-                tf.setText("Welcome to MusicViewer");
-            }
-        });
-    }
-
-    //MODIFIES: b, tf
-    //EFFECTS:  makes the button produce an 'exit app' action
-    private void setExitAppBtn(JButton b, JTextField tf) {
-        b.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                tf.setText("Exiting the app...");
-                int choice = JOptionPane.showConfirmDialog(frame,"Do you wish to exit the app?");
-                if (choice == 0) {
-                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    System.exit(0);
-                } else {
-                    tf.setText("Welcome to MusicViewer");
-                }
-            }
-        });
+        panel.add(ptf);
     }
 
     //MODIFIES: f
@@ -178,32 +111,133 @@ public class MusicViewer {
         return after;
     }
 
-    //MODIFIES: b
-    //EFFECTS: adds a playlist menu to the button
-    private void setPlaylistBtn(JButton b) {
+    //MODIFIES: playlistsPanel, menuPanel
+    //EFFECTS: sets a shadow on the panel backgrounds if given true, else resets to transparent
+    private void showShadowPanels(Boolean hasShadow) {
+        if (hasShadow) {
+            playlistsPanel.setBackground(new Color(0, 0, 0, 80));
+            menuPanel.setBackground(new Color(0, 0, 0, 80));
+        } else {
+            playlistsPanel.setBackground(new Color(0, 0, 0, 0));
+            menuPanel.setBackground(new Color(0, 0, 0, 0));
+        }
+    }
+
+    //MODIFIES: tf
+    //EFFECTS: sets text field to show message and panel appearance to show shadow
+    private void activeProgramAppearance(String message) {
+        tf.setText(message);
+        showShadowPanels(true);
+    }
+
+    //MODIFIES: tf
+    //EFFECTS: resets text field and panel appearance to default
+    private void defaultProgramAppearance() {
+        tf.setText("Welcome to MusicViewer");
+        showShadowPanels(false);
+    }
+
+    //MODIFIES: b, tf
+    //EFFECTS:  makes the button produce a 'make playlist' action
+    private void setMakePlaylistBtn(JButton b) {
         b.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setUpPlaylistMenu(b);
+                activeProgramAppearance("Making a playlist...");
+                String playlistName = JOptionPane.showInputDialog(frame,"Enter playlist name:");
+                if (playlistName != null) {
+                    JButton pb = new JButton(playlistName);
+                    playlistsPanel.add(pb);
+                    setPlaylistActionsBtn(pb);
+                }
+                defaultProgramAppearance();
+                b.revalidate(); //makes sure button is on screen, not only on mouse hover
             }
         });
     }
 
-    //EFFECTS: sets up the playlist menu
-    private void setUpPlaylistMenu(JButton b) {
-        JPanel playlistMenuPanel = new JPanel();
+    //MODIFIES: b, tf
+    //EFFECTS:  makes the button produce a 'view playlist' action
+    private void setLoadPlaylistBtn(JButton b) {
+        b.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                activeProgramAppearance("Loading playlists...");
+                int choice = JOptionPane.showConfirmDialog(frame,"Do you want to load playlists from file?",
+                        "Select an option", JOptionPane.OK_CANCEL_OPTION);
+                if (choice == 0) {
+                    //load playlists
+                    JOptionPane.showMessageDialog(frame,"There are no playlists to load from file.");
+                }
+                defaultProgramAppearance();
+            }
+        });
+    }
+
+    //MODIFIES: b, tf
+    //EFFECTS:  makes the button produce a 'view playlist' action
+    private void setSavePlaylistBtn(JButton b) {
+        b.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                activeProgramAppearance("Saving playlists...");
+                int choice = JOptionPane.showConfirmDialog(frame,"Do you want to save all playlists?",
+                        "Select an option", JOptionPane.OK_CANCEL_OPTION);
+                if (choice == 0) {
+                    //save playlists
+                    JOptionPane.showMessageDialog(frame,"Playlists successfully saved to file!");
+                }
+                defaultProgramAppearance();
+            }
+        });
+    }
+
+    //MODIFIES: b, tf
+    //EFFECTS:  makes the button produce an 'exit app' action
+    private void setExitAppBtn(JButton b) {
+        b.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                activeProgramAppearance("Exiting the app...");
+                int choice = JOptionPane.showConfirmDialog(frame,"Do you wish to exit the app?");
+                if (choice == 0) {
+                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    System.exit(0);
+                } else {
+                    defaultProgramAppearance();
+                }
+            }
+        });
+    }
+
+    //MODIFIES: b
+    //EFFECTS: adds a playlist actions menu to the button
+    private void setPlaylistActionsBtn(JButton b) {
+        b.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                activeProgramAppearance("Viewing playlist...");
+                setUpPlaylistActionsMenu(b);
+                defaultProgramAppearance();
+            }
+        });
+    }
+
+    //EFFECTS: sets up the playlist actions menu
+    private void setUpPlaylistActionsMenu(JButton b) {
+        JPanel playlistActionsPanel = new JPanel();
         JRadioButton r1 = new JRadioButton("View songs", true);
         JRadioButton r2 = new JRadioButton("Add a song");
 
-        playlistMenuPanel.add(r1);
-        playlistMenuPanel.add(r2);
+        playlistActionsPanel.add(r1);
+        playlistActionsPanel.add(r2);
 
         //use a button group tp keep radio buttons mutually exclusive
         ButtonGroup group = new ButtonGroup();
         group.add(r1);
         group.add(r2);
 
-        int choice = JOptionPane.showConfirmDialog(frame, playlistMenuPanel,
+        int choice = JOptionPane.showConfirmDialog(frame, playlistActionsPanel,
                 "Select an option", JOptionPane.OK_CANCEL_OPTION);
         if (choice == 0) {
             if (r1.isSelected()) {

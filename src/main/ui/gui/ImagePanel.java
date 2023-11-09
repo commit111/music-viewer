@@ -14,6 +14,7 @@ public class ImagePanel extends JPanel {
         this.setLayout(lm);
     }
 
+    //EFFECTS: repaints background with background image
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
