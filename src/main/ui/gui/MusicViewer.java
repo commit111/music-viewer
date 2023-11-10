@@ -54,9 +54,9 @@ public class MusicViewer {
         JButton b3 = new JButton("Save playlists");
         JButton b0 = new JButton("Exit app");
 
-        setMakePlaylistBtn(b);
-        setLoadPlaylistBtn(b2);
-        setSavePlaylistBtn(b3);
+        setMakePlaylistsBtn(b);
+        setLoadPlaylistsBtn(b2);
+        setSavePlaylistsBtn(b3);
         setExitAppBtn(b0);
 
         panel.add(tf);
@@ -67,7 +67,7 @@ public class MusicViewer {
     }
 
     //MODIFIES: panel
-    //EFFECTS: sets up the playlist panel by adding text field
+    //EFFECTS: sets up the playlist panel by adding text field to the panel
     private void setUpPlaylistsPanel(JPanel panel) {
         final JTextField ptf = new JTextField("Your Playlists");
         ptf.setEditable(false);
@@ -109,9 +109,9 @@ public class MusicViewer {
         showShadowPanels(false);
     }
 
-    //MODIFIES: b, tf
-    //EFFECTS:  makes the button produce a 'make playlist' action
-    private void setMakePlaylistBtn(JButton b) {
+    //MODIFIES: b
+    //EFFECTS:  makes the button produce a 'make a playlist' action
+    private void setMakePlaylistsBtn(JButton b) {
         b.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -128,9 +128,9 @@ public class MusicViewer {
         });
     }
 
-    //MODIFIES: b, tf
-    //EFFECTS:  makes the button produce a 'view playlist' action
-    private void setLoadPlaylistBtn(JButton b) {
+    //MODIFIES: b
+    //EFFECTS:  makes the button produce a 'load playlists' action
+    private void setLoadPlaylistsBtn(JButton b) {
         b.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -146,9 +146,9 @@ public class MusicViewer {
         });
     }
 
-    //MODIFIES: b, tf
-    //EFFECTS:  makes the button produce a 'view playlist' action
-    private void setSavePlaylistBtn(JButton b) {
+    //MODIFIES: b
+    //EFFECTS:  makes the button produce a 'save playlists' action
+    private void setSavePlaylistsBtn(JButton b) {
         b.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -164,7 +164,7 @@ public class MusicViewer {
         });
     }
 
-    //MODIFIES: b, tf
+    //MODIFIES: b
     //EFFECTS:  makes the button produce an 'exit app' action
     private void setExitAppBtn(JButton b) {
         b.addActionListener(new ActionListener() {
@@ -229,7 +229,7 @@ public class MusicViewer {
         svPanel.add(r1);
         svPanel.add(r2);
 
-        //use a button group tp keep radio buttons mutually exclusive
+        //use a button group to keep radio buttons mutually exclusive
         ButtonGroup group = new ButtonGroup();
         group.add(r1);
         group.add(r2);
