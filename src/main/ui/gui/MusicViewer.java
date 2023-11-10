@@ -47,6 +47,7 @@ public class MusicViewer {
         tf = new JTextField();
         tf.setBounds(300,250, 150,25); //x-axis, y-axis, width, height
         tf.setText("Welcome to MusicViewer");
+        tf.setFont(tf.getFont().deriveFont(Font.ITALIC, 12));
         tf.setEditable(false);
 
         JButton b = new JButton("Make a new playlist"); //creating instance of JButton
@@ -70,6 +71,7 @@ public class MusicViewer {
     //EFFECTS: sets up the playlist panel by adding text field to the panel
     private void setUpPlaylistsPanel(JPanel panel) {
         final JTextField ptf = new JTextField("Your Playlists");
+        ptf.setFont(ptf.getFont().deriveFont(Font.ITALIC, 12));
         ptf.setEditable(false);
         panel.add(ptf);
     }
