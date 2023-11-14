@@ -135,7 +135,7 @@ public class MusicViewer {
             @Override
             public void actionPerformed(ActionEvent e) {
                 activeProgramAppearance("Making a playlist...");
-                String playlistName = JOptionPane.showInputDialog(frame, "Enter playlist name:");
+                String playlistName = getNameInput("Enter playlist name:");
                 if (playlistName != null) {
                     musicOrganizer.addPlaylist(playlistName);
                     Playlist p = musicOrganizer.getPlaylistByName(playlistName);
@@ -222,40 +222,47 @@ public class MusicViewer {
 
     //EFFECTS: sets up the playlist actions menu
     private void setUpPlaylistActionsMenu(Playlist p) {
-        JPanel playlistActionsPanel = new JPanel();
+        JPanel playlistActionsPanel = new JPanel(new GridLayout(0,2));
         JRadioButton r1 = new JRadioButton("View songs", true);
         JRadioButton r2 = new JRadioButton("Add a song");
+        JRadioButton r3 = new JRadioButton("Remove a song");
 
         playlistActionsPanel.add(r1);
         playlistActionsPanel.add(r2);
+        playlistActionsPanel.add(r3);
 
         //use a button group tp keep radio buttons mutually exclusive
         ButtonGroup group = new ButtonGroup();
         group.add(r1);
         group.add(r2);
+        group.add(r3);
 
         int choice = JOptionPane.showConfirmDialog(frame, playlistActionsPanel,
                 "Select an option", JOptionPane.OK_CANCEL_OPTION);
         if (choice == 0) {
             if (r1.isSelected()) {
-                setUpSongsViewMenu(p);
+                setUpSongsViewMenu(p, "view");
             } else if (r2.isSelected()) {
-                JOptionPane.showMessageDialog(frame, "We'll be able to add a song later :)");
+                addSongAction(p);
+                //JOptionPane.showMessageDialog(frame, "We'll be able to add a song later :)");
+            } else if (r3.isSelected()) {
+                setUpSongsViewMenu(p, "remove");
+                //JOptionPane.showMessageDialog(frame, "We'll be able to remove a song later...");
             }
         }
     }
 
     //EFFECTS: sets up the songs view menu
-    private void setUpSongsViewMenu(Playlist p) {
+    private void setUpSongsViewMenu(Playlist p, String task) {
         if (p.getSongs().size() != 0) {
-            showSongsToChooseFromMenu(p);
+            showSongsToChooseFromMenu(p, task);
         } else {
-            JOptionPane.showMessageDialog(frame, "This playlist has no songs to view!");
+            JOptionPane.showMessageDialog(frame, "This playlist has no songs to " + task + "!");
         }
     }
 
     //EFFECTS: shows the song selection panel for a non-empty playlist
-    private void showSongsToChooseFromMenu(Playlist p) {
+    private void showSongsToChooseFromMenu(Playlist p, String task) {
         JPanel svPanel = new JPanel(new GridLayout(0, 1)); //zero means it can grow infinitely
         ButtonGroup group = new ButtonGroup();
         String delimiter = "%%%"; //separates song name and artist name
@@ -269,10 +276,14 @@ public class MusicViewer {
             r.setActionCommand(s.getName() + delimiter + s.getArtist()); //sets an action command for radio button
         }
         int choice = JOptionPane.showConfirmDialog(frame, svPanel,
-                "Select a song to view", JOptionPane.OK_CANCEL_OPTION);
+                "Select a song to " + task, JOptionPane.OK_CANCEL_OPTION);
         if (choice == 0 && group.getSelection() != null) {
             Song songSelected = getSongSelected(p, group, delimiter);
-            setUpSongActionsMenu(songSelected);
+            if (task.equals("view")) {
+                setUpSongActionsMenu(songSelected);
+            } else if (task.equals("remove")) {
+                removeSongAction(songSelected, p);
+            }
         }
     }
 
@@ -287,6 +298,47 @@ public class MusicViewer {
             artistName = actionCommand.substring(delimiterIndex + delimiter.length());
         }
         return p.getSongByNameAndArtist(songName, artistName);
+    }
+
+    //MODIFIES: p
+    //EFFECTS: adds a song to the playlist
+    private void addSongAction(Playlist p) {
+        String songName = getNameInput("Enter a song name:");
+        if (songName == null) {
+            return;
+        }
+        String artistName = getNameInput("Enter an artist name:");
+        if (artistName == null) {
+            return;
+        }
+        Song song = new Song(songName, artistName);
+        p.addSong(song);
+        JOptionPane.showMessageDialog(frame, "Successfully added \n"
+                + song.getShortInfo() + " to " + p.getName() + "!");
+    }
+
+    private String getNameInput(String message) {
+        String name = JOptionPane.showInputDialog(frame, message);
+        if (name != null) {
+            while (name.equals("")) {
+                name = JOptionPane.showInputDialog(frame, message);
+                if (name == null) {
+                    return null;
+                }
+            }
+            return name;
+        } else {
+            return null;
+        }
+    }
+
+
+    //MODIFIES: p
+    //EFFECTS: removes a song from the playlist
+    private void removeSongAction(Song s, Playlist p) {
+        p.removeSong(s);
+        JOptionPane.showMessageDialog(frame, "Successfully removed \n"
+                + s.getShortInfo() + " from " + p.getName() + "!");
     }
 
     //EFFECTS: shows the action menu for a given song
