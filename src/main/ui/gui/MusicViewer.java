@@ -15,7 +15,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MusicViewer {
@@ -29,8 +28,8 @@ public class MusicViewer {
     private JTextField tf;
 
     private MusicOrganizer musicOrganizer;
-    private JsonWriter jsonWriter;
-    private JsonReader jsonReader;
+    private final JsonWriter jsonWriter;
+    private final JsonReader jsonReader;
 
     public static void main(String[] args) throws IOException {
         MusicViewer mv = new MusicViewer();
@@ -39,7 +38,7 @@ public class MusicViewer {
     //Constructor
     public MusicViewer() throws IOException {
         frame = new JFrame(); //creating instance of JFrame
-        bgPanel = new ImagePanel(ImageIO.read(new File(IMG_FILE_PATH)), new GridLayout(1,0));
+        bgPanel = new ImagePanel(ImageIO.read(new File(IMG_FILE_PATH)), new GridLayout(1, 0));
         playlistsPanel = new TransparentPanel(new FlowLayout());
         menuPanel = new TransparentPanel(new FlowLayout());
 
@@ -97,8 +96,8 @@ public class MusicViewer {
     //MODIFIES: f
     //EFFECTS: sets up the settings for the JFrame
     private void setUpJFrameSettings(JFrame f) {
-        f.setSize(800,800); //width and height
-        f.setLayout(new GridLayout(1,0)); //using layout manager
+        f.setSize(800, 800); //width and height
+        f.setLayout(new GridLayout(1, 0)); //using layout manager
         f.setVisible(true); //making the frame visible
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -136,7 +135,7 @@ public class MusicViewer {
             @Override
             public void actionPerformed(ActionEvent e) {
                 activeProgramAppearance("Making a playlist...");
-                String playlistName = JOptionPane.showInputDialog(frame,"Enter playlist name:");
+                String playlistName = JOptionPane.showInputDialog(frame, "Enter playlist name:");
                 if (playlistName != null) {
                     musicOrganizer.addPlaylist(playlistName);
                     Playlist p = musicOrganizer.getPlaylistByName(playlistName);
@@ -157,13 +156,13 @@ public class MusicViewer {
             @Override
             public void actionPerformed(ActionEvent e) {
                 activeProgramAppearance("Loading playlists...");
-                int choice = JOptionPane.showConfirmDialog(frame,"Do you want to load playlists from file?",
+                int choice = JOptionPane.showConfirmDialog(frame, "Do you want to load playlists from file?",
                         "Select an option", JOptionPane.OK_CANCEL_OPTION);
                 if (choice == 0) {
                     //load playlists
                     loadMyMusic();
                     updatePlaylistsPanel();
-                    JOptionPane.showMessageDialog(frame,"Playlists successfully loaded from file!");
+                    JOptionPane.showMessageDialog(frame, "Playlists successfully loaded from file!");
                 }
                 defaultProgramAppearance();
                 b.revalidate();
@@ -178,12 +177,12 @@ public class MusicViewer {
             @Override
             public void actionPerformed(ActionEvent e) {
                 activeProgramAppearance("Saving playlists...");
-                int choice = JOptionPane.showConfirmDialog(frame,"Do you want to save all playlists?",
+                int choice = JOptionPane.showConfirmDialog(frame, "Do you want to save all playlists?",
                         "Select an option", JOptionPane.OK_CANCEL_OPTION);
                 if (choice == 0) {
                     //save playlists
                     saveMyMusic();
-                    JOptionPane.showMessageDialog(frame,"Playlists successfully saved to file!");
+                    JOptionPane.showMessageDialog(frame, "Playlists successfully saved to file!");
                 }
                 defaultProgramAppearance();
             }
@@ -197,7 +196,7 @@ public class MusicViewer {
             @Override
             public void actionPerformed(ActionEvent e) {
                 activeProgramAppearance("Exiting the app...");
-                int choice = JOptionPane.showConfirmDialog(frame,"Do you wish to exit the app?");
+                int choice = JOptionPane.showConfirmDialog(frame, "Do you wish to exit the app?");
                 if (choice == 0) {
                     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     System.exit(0);
@@ -215,14 +214,14 @@ public class MusicViewer {
             @Override
             public void actionPerformed(ActionEvent e) {
                 activeProgramAppearance("Viewing playlist...");
-                setUpPlaylistActionsMenu(b, p);
+                setUpPlaylistActionsMenu(p);
                 defaultProgramAppearance();
             }
         });
     }
 
     //EFFECTS: sets up the playlist actions menu
-    private void setUpPlaylistActionsMenu(JButton b, Playlist p) {
+    private void setUpPlaylistActionsMenu(Playlist p) {
         JPanel playlistActionsPanel = new JPanel();
         JRadioButton r1 = new JRadioButton("View songs", true);
         JRadioButton r2 = new JRadioButton("Add a song");
@@ -239,7 +238,7 @@ public class MusicViewer {
                 "Select an option", JOptionPane.OK_CANCEL_OPTION);
         if (choice == 0) {
             if (r1.isSelected()) {
-                setUpSongsViewMenu(b, p);
+                setUpSongsViewMenu(p);
             } else if (r2.isSelected()) {
                 JOptionPane.showMessageDialog(frame, "We'll be able to add a song later :)");
             }
@@ -247,35 +246,103 @@ public class MusicViewer {
     }
 
     //EFFECTS: sets up the songs view menu
-    private void setUpSongsViewMenu(JButton b, Playlist p) {
+    private void setUpSongsViewMenu(Playlist p) {
         if (p.getSongs().size() != 0) {
-            makeSongsPanelForPlaylist(p);
+            showSongsToChooseFromMenu(p);
         } else {
             JOptionPane.showMessageDialog(frame, "This playlist has no songs to view!");
         }
     }
 
     //EFFECTS: shows the song selection panel for a non-empty playlist
-    private void makeSongsPanelForPlaylist(Playlist p) {
-        JPanel svPanel = new JPanel(new GridLayout(0,1)); //zero means it can grow infinitely
+    private void showSongsToChooseFromMenu(Playlist p) {
+        JPanel svPanel = new JPanel(new GridLayout(0, 1)); //zero means it can grow infinitely
         ButtonGroup group = new ButtonGroup();
-        for (Song s: p.getSongs()) {
+        String delimiter = "%%%"; //separates song name and artist name
+        for (Song s : p.getSongs()) {
             JRadioButton r = new JRadioButton(s.getShortInfo());
             svPanel.add(r);
             if (group.getSelection() == null) {
-                r.setSelected(true); //sets the first button as selected
+                r.setSelected(true); //selects the first button by default
             }
             group.add(r);
-            r.setActionCommand(s.getShortInfo());
+            r.setActionCommand(s.getName() + delimiter + s.getArtist()); //sets an action command for radio button
         }
         int choice = JOptionPane.showConfirmDialog(frame, svPanel,
                 "Select a song to view", JOptionPane.OK_CANCEL_OPTION);
         if (choice == 0 && group.getSelection() != null) {
-            JOptionPane.showMessageDialog(frame, "Loading menu for... "
-                    + group.getSelection().getActionCommand());
-            //show single song menu
-            //get the song from p based on radio btn selected
+            Song songSelected = getSongSelected(p, group, delimiter);
+            setUpSongActionsMenu(songSelected);
         }
+    }
+
+    //EFFECTS: returns the song selected from a playlist based on its button group action
+    private Song getSongSelected(Playlist p, ButtonGroup group, String delimiter) {
+        String actionCommand = group.getSelection().getActionCommand();
+        String songName = "";
+        String artistName = "";
+        int delimiterIndex = actionCommand.indexOf(delimiter);
+        if (delimiterIndex != -1) {
+            songName = actionCommand.substring(0, delimiterIndex);
+            artistName = actionCommand.substring(delimiterIndex + delimiter.length());
+        }
+        return p.getSongByNameAndArtist(songName, artistName);
+    }
+
+    //EFFECTS: shows the action menu for a given song
+    private void setUpSongActionsMenu(Song s) {
+        JPanel songActionsPanel = new JPanel(new GridLayout(0,1));
+        JRadioButton r1 = new JRadioButton("Play song", true);
+        JRadioButton r2 = new JRadioButton("View song info");
+        JRadioButton r3 = new JRadioButton("Edit song description");
+
+        songActionsPanel.add(r1);
+        songActionsPanel.add(r2);
+        songActionsPanel.add(r3);
+
+        ButtonGroup group = new ButtonGroup();
+        group.add(r1);
+        group.add(r2);
+        group.add(r3);
+
+        int choice = JOptionPane.showConfirmDialog(frame, songActionsPanel,
+                s.getShortInfo(), JOptionPane.OK_CANCEL_OPTION);
+        if (choice == 0) {
+            if (r1.isSelected()) {
+                playSongDialog(s);
+            } else if (r2.isSelected()) {
+                viewSongDialog(s);
+            } else if (r3.isSelected()) {
+                editSongDescDialog(s);
+            }
+        }
+    }
+
+    //MODIFIES: s
+    //EFFECTS: shows the dialog for user to edit the song description
+    private void editSongDescDialog(Song s) {
+        String input = JOptionPane.showInputDialog(frame, "Enter a new song description: ");
+        if (input != null) {
+            s.setDescription(input);
+            JOptionPane.showMessageDialog(frame, "Successfully updated song description for \n"
+                    + s.getShortInfo() + "!");
+        }
+    }
+
+    //MODIFIES: s
+    //EFFECTS: shows the dialog for user to play the song once
+    private void playSongDialog(Song s) {
+        s.increaseTimesPlayed();
+        JOptionPane.showConfirmDialog(frame, "... You've now played it "
+                + s.getTimesPlayed() + " times!",
+                "Playing " + s.getShortInfo() + "...", JOptionPane.DEFAULT_OPTION);
+    }
+
+    //EFFECTS: shows the dialog for user to view the song information
+    private void viewSongDialog(Song s) {
+        JOptionPane.showConfirmDialog(frame, "Times played: " + s.getTimesPlayed() + "\n"
+                        + "Description: " + s.getDescription(),
+                s.getShortInfo(), JOptionPane.DEFAULT_OPTION);
     }
 
     //EFFECTS: saves music organizer object from file
