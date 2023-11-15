@@ -6,6 +6,7 @@ import java.awt.*;
 //The following code is referenced to the StackOverflow post:
 //https://stackoverflow.com/questions/30271069/setting-an-image-as-background-for-jframe
 
+//Creates a new panel that can hold a background image
 public class ImagePanel extends JPanel {
     private Image bgImage;
 
@@ -14,7 +15,7 @@ public class ImagePanel extends JPanel {
         this.setLayout(lm);
     }
 
-    //EFFECTS: repaints background with a background image scaled according to window size
+    //EFFECTS: paints the component with a rectangular background image scaled according to window size
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
