@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class MusicViewer {
-    private static final String IMG_FILE_PATH = "./src/main/ui/gui/abstract.png";
+    private static final String IMG_FILE_PATH = "./data/images/abstract.png";
     private static final String JSON_STORE = "./data/music-viewer.json";
 
     private final JFrame frame;
@@ -244,10 +244,8 @@ public class MusicViewer {
                 setUpSongsViewMenu(p, "view");
             } else if (r2.isSelected()) {
                 addSongAction(p);
-                //JOptionPane.showMessageDialog(frame, "We'll be able to add a song later :)");
             } else if (r3.isSelected()) {
                 setUpSongsViewMenu(p, "remove");
-                //JOptionPane.showMessageDialog(frame, "We'll be able to remove a song later...");
             }
         }
     }
@@ -266,15 +264,7 @@ public class MusicViewer {
         JPanel svPanel = new JPanel(new GridLayout(0, 1)); //zero means it can grow infinitely
         ButtonGroup group = new ButtonGroup();
         String delimiter = "%%%"; //separates song name and artist name
-        for (Song s : p.getSongs()) {
-            JRadioButton r = new JRadioButton(s.getShortInfo());
-            svPanel.add(r);
-            if (group.getSelection() == null) {
-                r.setSelected(true); //selects the first button by default
-            }
-            group.add(r);
-            r.setActionCommand(s.getName() + delimiter + s.getArtist()); //sets an action command for radio button
-        }
+        makeSongBtns(p, svPanel, group, delimiter);
         int choice = JOptionPane.showConfirmDialog(frame, svPanel,
                 "Select a song to " + task, JOptionPane.OK_CANCEL_OPTION);
         if (choice == 0 && group.getSelection() != null) {
@@ -284,6 +274,24 @@ public class MusicViewer {
             } else if (task.equals("remove")) {
                 removeSongAction(songSelected, p);
             }
+        }
+    }
+
+    //EFFECTS: adds a radio button to a panel for each song in a playlist
+    private void makeSongBtns(Playlist p, JPanel svPanel, ButtonGroup group, String delimiter) {
+        for (Song s : p.getSongs()) {
+            JRadioButton r = new JRadioButton(s.getShortInfo());
+            svPanel.add(r);
+            selectFirstButtonByDefault(group, r);
+            group.add(r);
+            r.setActionCommand(s.getName() + delimiter + s.getArtist());
+        }
+    }
+
+    //EFFECTS: selects the first radio button in a button group by default
+    private void selectFirstButtonByDefault(ButtonGroup group, JRadioButton r) {
+        if (group.getSelection() == null) {
+            r.setSelected(true);
         }
     }
 
@@ -317,6 +325,8 @@ public class MusicViewer {
                 + song.getShortInfo() + " to " + p.getName() + "!");
     }
 
+    //EFFECTS: keeps showing dialog until user input is taken and returned,
+    //         or until it is cancelled in which it returns null
     private String getNameInput(String message) {
         String name = JOptionPane.showInputDialog(frame, message);
         if (name != null) {
