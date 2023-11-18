@@ -328,20 +328,15 @@ public class MusicViewer {
     //EFFECTS: keeps showing dialog until user input is taken and returned,
     //         or until it is cancelled in which it returns null
     private String getNameInput(String message) {
-        String name = JOptionPane.showInputDialog(frame, message);
-        if (name != null) {
-            while (name.equals("")) {
-                name = JOptionPane.showInputDialog(frame, message);
-                if (name == null) {
-                    return null;
-                }
+        String name = "";
+        while (name.equals("")) {
+            name = JOptionPane.showInputDialog(frame, message);
+            if (name == null) {
+                return null;
             }
-            return name;
-        } else {
-            return null;
         }
+        return name;
     }
-
 
     //MODIFIES: p
     //EFFECTS: removes a song from the playlist
