@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-//Creates a new Music App console program based on the model for a Music Organizer
+//Represents a Music App console program that displays and organizes a user's music
 public class MusicApp {
     private static final String JSON_STORE = "./data/music-organizer.json";
     private MusicOrganizer myMusic;
@@ -22,7 +22,7 @@ public class MusicApp {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
-    //  EFFECTS: runs music application
+    // EFFECTS: runs music application
     public MusicApp() {
         runMusicApp();
     }

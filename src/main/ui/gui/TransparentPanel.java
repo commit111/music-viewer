@@ -3,7 +3,7 @@ package ui.gui;
 import javax.swing.*;
 import java.awt.*;
 
-//Creates a new panel that can have a transparent or semi-transparent background (having colored tint is optional)
+//Represents a JPanel that can have a transparent or semi-transparent background
 public class TransparentPanel extends JPanel {
     public TransparentPanel(LayoutManager lm) {
         this.setLayout(lm);

@@ -6,7 +6,7 @@ import java.awt.*;
 //The following code is referenced to the StackOverflow post:
 //https://stackoverflow.com/questions/30271069/setting-an-image-as-background-for-jframe
 
-//Creates a new panel that can hold a background image
+//Represents a JPanel that can hold a background image
 public class ImagePanel extends JPanel {
     private Image bgImage;
 

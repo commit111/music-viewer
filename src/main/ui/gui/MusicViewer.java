@@ -17,7 +17,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-//Creates a new Music Viewer, which is a gui adaptation of the Music App
+//Represents a Music Viewer program, which is a gui adaptation of the Music App
 public class MusicViewer {
     private static final String IMG_FILE_PATH = "./data/images/abstract.png";
     private static final String JSON_STORE = "./data/music-viewer.json";
@@ -129,6 +129,9 @@ public class MusicViewer {
         tf.setText("Welcome to MusicViewer");
         showShadowPanels(false);
     }
+
+    //The general format for b.addActionListener() can be attributed to the tutorial from:
+    //https://www.javatpoint.com/java-jbutton
 
     //MODIFIES: b
     //EFFECTS:  makes the button produce a 'make a playlist' action
