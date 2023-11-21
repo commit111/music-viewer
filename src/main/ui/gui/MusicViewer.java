@@ -17,6 +17,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+//Creates a new Music Viewer, which is a gui adaptation of the Music App
 public class MusicViewer {
     private static final String IMG_FILE_PATH = "./data/images/abstract.png";
     private static final String JSON_STORE = "./data/music-viewer.json";
@@ -31,6 +32,7 @@ public class MusicViewer {
     private final JsonWriter jsonWriter;
     private final JsonReader jsonReader;
 
+    //Runs the music viewer
     public static void main(String[] args) throws IOException {
         MusicViewer mv = new MusicViewer();
     }
