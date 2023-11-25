@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 
 import org.json.*;
 
-// Represents a reader that reads workroom from JSON data stored in file.
+// Represents a reader that reads the JSON data stored in file.
 // It is modelled after the class in the JsonSerializationDemo project.
 public class JsonReader {
     private String source;
@@ -37,7 +37,6 @@ public class JsonReader {
         try (Stream<String> stream = Files.lines(Paths.get(source), StandardCharsets.UTF_8)) {
             stream.forEach(s -> contentBuilder.append(s));
         }
-
         return contentBuilder.toString();
     }
 
