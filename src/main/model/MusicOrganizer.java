@@ -6,12 +6,12 @@ import persistence.Writable;
 
 import java.util.ArrayList;
 
-//Represents a music organizer with a list of playlists.
+// Represents a music organizer with a list of playlists.
 public class MusicOrganizer implements Writable {
     private ArrayList<Playlist> allPlaylists;
 
-    //Constructor
-    //EFFECTS: creates a music organizer with a name and empty list of playlists
+    // Constructor
+    // EFFECTS: creates a music organizer with a name and empty list of playlists
     public MusicOrganizer() {
         this.allPlaylists = new ArrayList<>();
     }
@@ -20,7 +20,7 @@ public class MusicOrganizer implements Writable {
         return allPlaylists;
     }
 
-    //EFFECTS: returns true if playlist with a given name exists in the system, false otherwise
+    // EFFECTS: returns true if playlist with a given name exists in the system, false otherwise
     public boolean doesPlaylistExist(String name) {
         for (Playlist p : this.getAllPlaylists()) {
             if (p.getName().equals(name)) {
@@ -30,7 +30,7 @@ public class MusicOrganizer implements Writable {
         return false;
     }
 
-    //EFFECTS: returns the first playlist with a given name
+    // EFFECTS: returns the first playlist with a given name
     public Playlist getPlaylistByName(String name) {
         for (Playlist p : this.getAllPlaylists()) {
             if (p.getName().equals(name)) {
@@ -40,14 +40,14 @@ public class MusicOrganizer implements Writable {
         return null;
     }
 
-    //MODIFIES: this
-    //EFFECTS: creates a new playlist in the music organizer
+    // MODIFIES: this
+    // EFFECTS: creates a new playlist in the music organizer
     public void addPlaylist(String name) {
         Playlist playlist = new Playlist(name);
         this.allPlaylists.add(playlist);
     }
 
-
+    // EFFECTS: returns a JSON object of the playlists in the music organizer
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -58,11 +58,9 @@ public class MusicOrganizer implements Writable {
     // EFFECTS: returns playlists in this music organizer as a JSON array
     private JSONArray allPlaylistsToJson() {
         JSONArray jsonArray = new JSONArray();
-
         for (Playlist p : allPlaylists) {
             jsonArray.put(p.toJson());
         }
-
         return jsonArray;
     }
 

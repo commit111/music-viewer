@@ -6,13 +6,13 @@ import persistence.Writable;
 
 import java.util.ArrayList;
 
-//Represents a playlist with a name and a list of songs.
+// Represents a playlist with a name and a list of songs.
 public class Playlist implements Writable {
     private String name;
     private ArrayList<Song> songs;
 
-    //Constructor
-    //EFFECTS: creates a playlist with a name and empty list of songs
+    // Constructor
+    // EFFECTS: creates a playlist with a name and empty list of songs
     public Playlist(String name) {
         this.name = name;
         this.songs = new ArrayList<>();
@@ -26,7 +26,7 @@ public class Playlist implements Writable {
         return songs;
     }
 
-    //EFFECTS: returns true if song with a given name and artist exists in the playlist, false otherwise
+    // EFFECTS: returns true if song with a given name and artist exists in the playlist, false otherwise
     public boolean doesSongExist(String name, String artist) {
         for (Song s : this.getSongs()) {
             if (s.getName().equals(name) && s.getArtist().equals(artist)) {
@@ -36,7 +36,7 @@ public class Playlist implements Writable {
         return false;
     }
 
-    //EFFECTS: returns the first song with a given name and artist if it is in the playlist, null otherwise
+    // EFFECTS: returns the first song with a given name and artist if it is in the playlist, null otherwise
     public Song getSongByNameAndArtist(String name, String artist) {
         for (Song s : this.getSongs()) {
             if (s.getName().equals(name) && s.getArtist().equals(artist)) {
@@ -46,19 +46,23 @@ public class Playlist implements Writable {
         return null;
     }
 
-    //MODIFIES: this
-    //EFFECTS: adds a song to the playlist
+    // MODIFIES: this
+    // EFFECTS: adds a song to the playlist
     public void addSong(Song song) {
         this.songs.add(song);
+        EventLog.getInstance().logEvent(new Event("Added the song: "
+                + song.getShortInfo() + " to a playlist"));
     }
 
-    //MODIFIES: this
-    //EFFECTS: removes a song from the playlist
+    // MODIFIES: this
+    // EFFECTS: removes a song from the playlist
     public void removeSong(Song song) {
         this.songs.remove(song);
+        EventLog.getInstance().logEvent(new Event("Removed the song: "
+                + song.getShortInfo() + " from a playlist"));
     }
 
-
+    // EFFECTS: returns a JSON object of the songs in the playlist
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -70,11 +74,9 @@ public class Playlist implements Writable {
     // EFFECTS: returns songs in this music organizer as a JSON array
     private JSONArray songsToJson() {
         JSONArray jsonArray = new JSONArray();
-
         for (Song s : songs) {
             jsonArray.put(s.toJson());
         }
-
         return jsonArray;
     }
 

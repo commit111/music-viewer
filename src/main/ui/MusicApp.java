@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-//Represents a Music App console program that displays and organizes a user's music
+// Represents a Music App console program that displays and keeps the organization of a user's music.
 public class MusicApp {
     private static final String JSON_STORE = "./data/music-organizer.json";
     private MusicOrganizer myMusic;
@@ -124,8 +124,8 @@ public class MusicApp {
         }
     }
 
-    //MODIFIES: this
-    //EFFECTS: processes user command in single playlist menu state
+    // MODIFIES: this
+    // EFFECTS: processes user command in single playlist menu state
     private void processSinglePlaylistCommand(String command) {
         if (command.equals("s")) {
             doAddSong();
@@ -145,8 +145,8 @@ public class MusicApp {
         }
     }
 
-    //MODIFIES: this
-    //EFFECTS: processes user command in single song menu state
+    // MODIFIES: this
+    // EFFECTS: processes user command in single song menu state
     private void processSingleSongCommand(String command) {
         if (command.equals("d")) {
             doEditSongDetails();
@@ -161,7 +161,7 @@ public class MusicApp {
         }
     }
 
-    //EFFECTS: shows user the home menu options
+    // EFFECTS: shows user the home menu options
     private void showHomeMenu() {
         System.out.println("\n~ Home Menu ~");
         System.out.println("Choose an option: ");
@@ -171,7 +171,7 @@ public class MusicApp {
         System.out.println("\texit app - e");
     }
 
-    //EFFECTS: shows options for user's created playlists
+    // EFFECTS: shows options for user's created playlists
     private void showPlaylistsMenu() {
         System.out.println("*** Your Playlists ***");
         showAllPlaylists(myMusic);
@@ -183,7 +183,7 @@ public class MusicApp {
 
     }
 
-    //EFFECTS: shows the options for a selected playlist with a given name
+    // EFFECTS: shows the options for a selected playlist with a given name
     private void showSinglePlaylistMenu(String name) {
         System.out.println("***** Songs in Playlist: " + name + " *****");
         showSongsInPlaylist(name);
@@ -195,7 +195,7 @@ public class MusicApp {
         System.out.println("\texit app - e");
     }
 
-    //EFFECTS: shows the options for a selected song
+    // EFFECTS: shows the options for a selected song
     private void showSingleSongMenu(Song s) {
         String name = s.getName();
         String artist = s.getArtist();
@@ -208,7 +208,7 @@ public class MusicApp {
         System.out.println("\texit app - e");
     }
 
-    //EFFECTS: shows all of user's created playlists
+    // EFFECTS: shows all of user's created playlists
     private void showAllPlaylists(MusicOrganizer mo) {
         ArrayList<Playlist> allPlaylists = mo.getAllPlaylists();
         for (Playlist p : allPlaylists) {
@@ -216,7 +216,7 @@ public class MusicApp {
         }
     }
 
-    //EFFECTS: shows all the songs in a playlist with a given name
+    // EFFECTS: shows all the songs in a playlist with a given name
     private void showSongsInPlaylist(String name) {
         Playlist thisPlaylist = myMusic.getPlaylistByName(name);
         for (Song s : thisPlaylist.getSongs()) {
@@ -224,14 +224,14 @@ public class MusicApp {
         }
     }
 
-    //EFFECTS: shows the detailed information view for a song
+    // EFFECTS: shows the detailed information view for a song
     private void showSongDetails(Song s) {
         System.out.println("Details: " + s.getDescription());
         System.out.println("You've played this song " + s.getTimesPlayed() + " times!");
     }
 
-    //MODIFIES: this, Song
-    //EFFECTS: carries out the action of playing a song
+    // MODIFIES: this, Song
+    // EFFECTS: carries out the action of playing a song
     private void doPlaySong() {
         Song thisSong = viewedSong;
         thisSong.increaseTimesPlayed();
@@ -250,8 +250,9 @@ public class MusicApp {
         System.out.println("Successfully added new playlist!");
     }
 
-    //MODIFIES: this
-    //EFFECTS: chooses a playlist to view based on user input, returns false if music organizer has no playlists to view
+    // MODIFIES: this
+    // EFFECTS: chooses a playlist to view based on user input,
+    //          returns false if music organizer has no playlists to view
     private boolean doChoosePlaylistToView() {
         if (!(myMusic.getAllPlaylists().size() == 0)) {
             System.out.println("Which playlist would you like to view? Enter a name: ");
@@ -277,8 +278,8 @@ public class MusicApp {
         }
     }
 
-    //MODIFIES: this, Playlist
-    //EFFECTS: carries out the action of adding a user-inputted song to a viewed playlist
+    // MODIFIES: this, Playlist
+    // EFFECTS: carries out the action of adding a user-inputted song to a viewed playlist
     private void doAddSong() {
         Playlist thisPlaylist = myMusic.getPlaylistByName(viewedPlaylist);
 
@@ -294,8 +295,8 @@ public class MusicApp {
         showSinglePlaylistMenu(viewedPlaylist);
     }
 
-    //MODIFIES: this, Playlist
-    //EFFECTS: carries out the action of removing a song from a viewed playlist, if it exists
+    // MODIFIES: this, Playlist
+    // EFFECTS: carries out the action of removing a song from a viewed playlist, if it exists
     private void doRemoveSong() {
         Playlist thisPlaylist = myMusic.getPlaylistByName(viewedPlaylist);
 
@@ -319,8 +320,9 @@ public class MusicApp {
         showSinglePlaylistMenu(viewedPlaylist);
     }
 
-    //MODIFIES: this
-    //EFFECTS: chooses a song to view based on user input, returns false if viewed playlist has no songs to view
+    // MODIFIES: this
+    // EFFECTS: chooses a song to view based on user input,
+    //          returns false if viewed playlist has no songs to view
     private boolean doChooseSongToView() {
         Playlist thisPlaylist = myMusic.getPlaylistByName(viewedPlaylist);
         if (!(thisPlaylist.getSongs().size() == 0)) {
@@ -344,8 +346,8 @@ public class MusicApp {
         }
     }
 
-    //MODIFIES: this, Song
-    //EFFECTS: carries out the action of editing a selected song's details
+    // MODIFIES: this, Song
+    // EFFECTS: carries out the action of editing a selected song's details
     private void doEditSongDetails() {
         System.out.println("Enter a new description:");
         String editedDesc = input.next();
@@ -355,7 +357,6 @@ public class MusicApp {
         menuState = "singleSong";
         showSingleSongMenu(viewedSong);
     }
-
 
     // EFFECTS: saves the music organizer object to file
     private void saveMyMusic() {

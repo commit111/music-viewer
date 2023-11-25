@@ -3,11 +3,10 @@ package persistence;
 import model.MusicOrganizer;
 import org.json.JSONObject;
 
-
 import java.io.*;
 
-// Represents a writer that writes JSON representation of workroom to file
-// It is modelled after the class in the JsonSerializationDemo project
+// Represents a writer that writes the JSON representation of music data to file.
+// It is modelled after the class in the JsonSerializationDemo project.
 public class JsonWriter {
     private static final int TAB = 4;
     private PrintWriter writer;
