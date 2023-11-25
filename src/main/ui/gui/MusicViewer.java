@@ -126,7 +126,7 @@ public class MusicViewer {
         });
     }
 
-    //EFFECTS: prints the event log
+    //EFFECTS: prints the events in the event log to console
     private void printEventLog() {
         EventLog el = EventLog.getInstance();
         for (Event event : el) {
@@ -473,9 +473,6 @@ public class MusicViewer {
             b.revalidate();
         }
     }
-
-
-
 }
 
 
