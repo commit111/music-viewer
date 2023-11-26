@@ -1,8 +1,6 @@
 package persistence;
 
-import model.MusicOrganizer;
-import model.Playlist;
-import model.Song;
+import model.*;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -22,11 +20,12 @@ public class JsonReader {
         this.source = source;
     }
 
-    // EFFECTS: reads MusicOrganizer from file and returns it;
+    // EFFECTS: reads music organizer data from file and returns it;
     // throws IOException if an error occurs reading data from file
     public MusicOrganizer read() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
+        EventLog.getInstance().logEvent(new Event("Retrieved the music data from file"));
         return parseMusicOrganizer(jsonObject);
     }
 

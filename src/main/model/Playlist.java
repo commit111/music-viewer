@@ -50,16 +50,16 @@ public class Playlist implements Writable {
     // EFFECTS: adds a song to the playlist
     public void addSong(Song song) {
         this.songs.add(song);
-        EventLog.getInstance().logEvent(new Event("Added the song: "
-                + song.getShortInfo() + " to a playlist"));
+        EventLog.getInstance().logEvent(new Event("Added a song to playlist: "
+                + song.getShortInfo()));
     }
 
     // MODIFIES: this
     // EFFECTS: removes a song from the playlist
     public void removeSong(Song song) {
         this.songs.remove(song);
-        EventLog.getInstance().logEvent(new Event("Removed the song: "
-                + song.getShortInfo() + " from a playlist"));
+        EventLog.getInstance().logEvent(new Event("Removed a song from playlist: "
+                + song.getShortInfo()));
     }
 
     // EFFECTS: returns a JSON object of the songs in the playlist

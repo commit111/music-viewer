@@ -45,6 +45,7 @@ public class MusicOrganizer implements Writable {
     public void addPlaylist(String name) {
         Playlist playlist = new Playlist(name);
         this.allPlaylists.add(playlist);
+        EventLog.getInstance().logEvent(new Event("A new playlist was created: " + name));
     }
 
     // EFFECTS: returns a JSON object of the playlists in the music organizer

@@ -1,5 +1,7 @@
 package persistence;
 
+import model.Event;
+import model.EventLog;
 import model.MusicOrganizer;
 import org.json.JSONObject;
 
@@ -25,10 +27,11 @@ public class JsonWriter {
     }
 
     // MODIFIES: this
-    // EFFECTS: writes JSON representation of workroom to file
+    // EFFECTS: writes JSON representation of a music organizer to file
     public void write(MusicOrganizer mo) {
         JSONObject json = mo.toJson();
         saveToFile(json.toString(TAB));
+        EventLog.getInstance().logEvent(new Event("Wrote the music data to file"));
     }
 
     // MODIFIES: this

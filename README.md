@@ -30,6 +30,8 @@ playlists in a Java application.
 - As a user, I want to be able to optionally save my music data to file
 - As a user, I want to be able to optionally load my music data from file
 
+---
+
 # Instructions For Grader
 
 ### To start, please run the MusicViewer class in the "gui" folder under "ui" to open the app.
@@ -67,3 +69,26 @@ playlists in a Java application.
   - click **"Save playlists"** button, then click **"OK"** when the dialog pops up to confirm.
 ### You can reload the state of my application by 
   - click **"Load playlists"** button, then click **"OK"** when the dialog pops up to confirm.
+
+---
+
+# Phase 4: Task 2
+
+A representative sample of events logged by the system can be shown below:
+
+    *** Event Log ***
+    Sun Nov 26 12:22:31 PST 2023
+    Retrieved the music data from file
+    Sun Nov 26 12:22:35 PST 2023
+    A new playlist was created: winter songs
+    Sun Nov 26 12:40:41 PST 2023
+    Added a song to playlist: agora hills by doja cat
+    Sun Nov 26 12:22:46 PST 2023
+    Played the song: agora hills by doja cat
+    Sun Nov 26 12:22:54 PST 2023
+    Removed a song from playlist: agora hills by doja cat
+    Sun Nov 26 12:22:59 PST 2023
+    Wrote the music data to file
+
+
+

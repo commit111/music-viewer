@@ -59,6 +59,7 @@ public class Song implements Writable {
     // EFFECTS: adds one to the number of times song has been played
     public void increaseTimesPlayed() {
         timesPlayed++;
+        EventLog.getInstance().logEvent(new Event("Played the song: " + this.getShortInfo()));
     }
 
     // EFFECTS: returns a JSON object of the song information

@@ -120,7 +120,6 @@ public class MusicViewer {
             @Override
             public void windowClosing(WindowEvent e) {
                 printEventLog();
-                System.out.println("JFrame Closed!");
                 e.getWindow().dispose();
             }
         });
@@ -129,8 +128,9 @@ public class MusicViewer {
     //EFFECTS: prints the events in the event log to console
     private void printEventLog() {
         EventLog el = EventLog.getInstance();
+        System.out.println("*** Event Log ***");
         for (Event event : el) {
-            System.out.println(event.getDescription());
+            System.out.println(event.toString());
         }
     }
 
@@ -233,6 +233,7 @@ public class MusicViewer {
                 int choice = JOptionPane.showConfirmDialog(frame, "Do you wish to exit the app?");
                 if (choice == 0) {
                     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    printEventLog();
                     System.exit(0);
                 } else {
                     defaultProgramAppearance();
@@ -443,7 +444,7 @@ public class MusicViewer {
             jsonWriter.open();
             jsonWriter.write(musicOrganizer);
             jsonWriter.close();
-            System.out.println("Saved the music to " + JSON_STORE);
+            //System.out.println("Saved the music to " + JSON_STORE);
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
         }
@@ -454,7 +455,7 @@ public class MusicViewer {
     private void loadMyMusic() {
         try {
             musicOrganizer = jsonReader.read();
-            System.out.println("Loaded the music from " + JSON_STORE);
+            //System.out.println("Loaded the music from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
