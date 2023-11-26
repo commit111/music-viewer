@@ -33,7 +33,7 @@ public class MusicViewer {
     private final JsonWriter jsonWriter;
     private final JsonReader jsonReader;
 
-    // Runs the music viewer
+    // EFFECTS: Runs the music viewer
     public static void main(String[] args) throws IOException {
         MusicViewer mv = new MusicViewer();
     }

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -46,6 +47,11 @@ public class EventTest {
     @Test
     public void testEqualsDifferentClass() {
         assertFalse(e.equals(d));
+    }
+
+    @Test
+    public void testHashCode() {
+        assertEquals(Objects.hash(e), e.hashCode());
     }
 
 }

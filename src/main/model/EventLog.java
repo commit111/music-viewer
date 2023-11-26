@@ -6,31 +6,20 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-/**
- * Represents a log of alarm system events.
- * We use the Singleton Design Pattern to ensure that there is only
- * one EventLog in the system and that the system has global access
- * to the single instance of the EventLog.
- */
+
+// Represents a log of music organizer events.
+// It is the only event log in the system, and uses a Singleton design pattern.
 public class EventLog implements Iterable<Event> {
-    /** the only EventLog in the system (Singleton Design Pattern) */
     private static EventLog theLog;
     private Collection<Event> events;
 
-    /**
-     * Prevent external construction.
-     * (Singleton Design Pattern).
-     */
+    // Constructor
+    // EFFECTS: creates an event log with an empty list of events
     private EventLog() {
         events = new ArrayList<Event>();
     }
 
-    /**
-     * Gets instance of EventLog - creates it
-     * if it doesn't already exist.
-     * (Singleton Design Pattern)
-     * @return  instance of EventLog
-     */
+    // EFFECTS: returns an instance of the event log and creates one if it doesn't exist
     public static EventLog getInstance() {
         if (theLog == null) {
             theLog = new EventLog();
@@ -38,22 +27,20 @@ public class EventLog implements Iterable<Event> {
         return theLog;
     }
 
-    /**
-     * Adds an event to the event log.
-     * @param e the event to be added
-     */
+    // MODIFIES: this
+    // EFFECTS: adds an event to the event log
     public void logEvent(Event e) {
         events.add(e);
     }
 
-    /**
-     * Clears the event log and logs the event.
-     */
+    // MODIFIES: this
+    // EFFECTS: clears the event log and adds it as an event
     public void clear() {
         events.clear();
         logEvent(new Event("Event log cleared."));
     }
 
+    // EFFECTS: returns an iterator of events
     @Override
     public Iterator<Event> iterator() {
         return events.iterator();
