@@ -91,4 +91,18 @@ A representative sample of events logged by the system can be shown below:
     Wrote the music data to file
 
 
+---
+
+# Phase 4: Task 3
+
+### Reflection
+If I had more time, I would have considered abstracting the common behaviors from the MusicOrganizer and Playlist.
+Specifically, I would have made it into a broader class, or even an interface, to capture similar elements
+common to both classes (e.g. "MusicList"). Additionally, I would have preferred to reduce the amount of repetition in
+the code for the MusicApp menu commands, as well as the Music Viewer buttons. This could have been done with a method
+specifically designed for processing menu commands, but the downside would be that the argument would need to be very
+long for that method. I am also inclined to think that some repetition of code would still be inevitable given that
+menu commands would need to be shown alongside other existing options, so it might not be a huge change
+in terms of results. Overall, I am satisfied with how my project turned out, and the process of creating it was a
+valuable learning experience for me. 
 
