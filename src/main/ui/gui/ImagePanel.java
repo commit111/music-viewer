@@ -3,6 +3,7 @@ package ui.gui;
 import javax.swing.*;
 import java.awt.*;
 
+
 // The following code is referenced to the StackOverflow post:
 // https://stackoverflow.com/questions/30271069/setting-an-image-as-background-for-jframe
 

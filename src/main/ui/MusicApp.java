@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
 // Represents a Music App console program that displays and keeps the organization of a user's music.
 public class MusicApp {
     private static final String JSON_STORE = "./data/music-organizer.json";

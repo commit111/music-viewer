@@ -3,6 +3,7 @@ package ui.gui;
 import javax.swing.*;
 import java.awt.*;
 
+
 // Represents a JPanel that can have a transparent or semi-transparent background.
 public class TransparentPanel extends JPanel {
     public TransparentPanel(LayoutManager lm) {

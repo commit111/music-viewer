@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 
 import org.json.*;
 
+
 // Represents a reader that reads the JSON data stored in file.
 // It is modelled after the class in the JsonSerializationDemo project.
 public class JsonReader {

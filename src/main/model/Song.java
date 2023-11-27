@@ -3,6 +3,7 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
+
 // Represents a song with a name, an artist, a description and number of times played.
 // The description is empty at the start when the song is created, and can be edited later on.
 public class Song implements Writable {

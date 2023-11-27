@@ -6,6 +6,7 @@ import persistence.Writable;
 
 import java.util.ArrayList;
 
+
 // Represents a playlist with a name and a list of songs.
 public class Playlist implements Writable {
     private String name;

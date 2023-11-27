@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
+//Unit tests for the MusicOrganizer class
 public class MusicOrganizerTest {
     MusicOrganizer moTest;
 

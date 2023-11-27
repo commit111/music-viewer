@@ -18,6 +18,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 // Represents a Music Viewer program, which is a gui adaptation of the Music App.
 public class MusicViewer {
     private static final String IMG_FILE_PATH = "./data/images/abstract.png";

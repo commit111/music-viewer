@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import java.io.*;
 
+
 // Represents a writer that writes the JSON representation of music data to file.
 // It is modelled after the class in the JsonSerializationDemo project.
 public class JsonWriter {

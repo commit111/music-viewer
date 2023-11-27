@@ -6,6 +6,7 @@ import persistence.Writable;
 
 import java.util.ArrayList;
 
+
 // Represents a music organizer with a list of playlists.
 public class MusicOrganizer implements Writable {
     private ArrayList<Playlist> allPlaylists;

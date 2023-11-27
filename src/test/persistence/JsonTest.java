@@ -4,6 +4,8 @@ import model.Song;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+
+//Unit tests for Json classes
 public class JsonTest {
 
     protected void checkSong(String name, String artist, String desc, int timesPlayed, Song s) {
