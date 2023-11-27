@@ -8,8 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Unit tests for the Event class
@@ -51,7 +50,10 @@ public class EventTest {
 
     @Test
     public void testHashCode() {
-        assertEquals(Objects.hash(e), e.hashCode());
+        Event e2 = new Event("Added song to playlist");
+        assertTrue(e.equals(e2));
+        assertTrue(e2.equals(e));
+        assertEquals(e2.hashCode(),e.hashCode());
     }
 
 }
